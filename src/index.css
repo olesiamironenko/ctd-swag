@@ -15,54 +15,27 @@
 
 :root {
   font-family: "WorkSans", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  background-color: #fff;
-  color: #0a162a;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
+  --header-height: 160px;
+  --medium-radius: 22px;
+  --small-radius: 12px;
+  --dark-blue: #12284c;
+  --medium-blue: #b3e0dc;
+  --medium-gray: #b6bcc8;
+  --light-blue: #e7f6f4;
+  --light-red: #ffccc0;
+  --medium-yellow: #fbecb0;
+  --dark-yellow: #f7d754;
 }
 
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-family: "WorkSans Bold", system-ui, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: #12284c;
+  color: #12284c;
 }
