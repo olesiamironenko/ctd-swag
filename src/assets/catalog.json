@@ -1,0 +1,194 @@
+{
+  "products": [
+    {
+      "name": "Bucket Hat",
+      "id": "hat01",
+      "price": 29.99,
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "description": "Protect your head from the sun with this stylish bucket hat",
+      "variants": [
+        {
+          "color": "black",
+          "image": "bucket-hat-black.png"
+        },
+        {
+          "color": "peach",
+          "image": "bucket-hat-peach.png"
+        }
+      ]
+    },
+    {
+      "name": "Canvas Bag",
+      "id": "bag01blue",
+      "price": "22.99",
+      "sizes": [],
+      "description": "Durable canvas tote bag with straps",
+      "variants": [
+        {
+          "color": "blue",
+          "image": "canvas-bag-blue.png"
+        },
+        {
+          "color": "orange",
+          "image": "canvas-bag-orange.png"
+        }
+      ]
+    },
+    {
+      "name": "Clock",
+      "id": "misc01",
+      "price": "22.99",
+      "sizes": [],
+      "description": "Battery-powered wall clock",
+      "variants": [
+        {
+          "color": "default",
+          "image": "clock.png"
+        }
+      ]
+    },
+    {
+      "name": "Mouse Pad",
+      "id": "misc02",
+      "price": "12.99",
+      "sizes": [],
+      "description": "A pad perfect for mousing",
+      "variants": [
+        {
+          "color": "default",
+          "image": "mouse-pad.png"
+        }
+      ]
+    },
+    {
+      "name": "Notebook",
+      "id": "misc03",
+      "price": 17.99,
+      "sizes": [],
+      "description": "Spiral-bound notebook with the Code The Dream logo.",
+      "colors": [
+        {
+          "color": "default",
+          "image": "notebook.png"
+        }
+      ]
+    },
+    {
+      "name": "Phone Case",
+      "id": "misc04",
+      "price": 34.99,
+      "sizes": [],
+      "description": "Bold orange case - stylish and protects phones from drops up to 703 feet",
+      "variants": [
+        {
+          "model": "iPhone",
+          "image": "phone-case.png"
+        },
+        {
+          "model": "Samsung Galaxy",
+          "image": "phone-case.png"
+        },
+        {
+          "model": "Google Pixel",
+          "image": "phone-case.png"
+        },
+        {
+          "model": "OnePlus",
+          "image": "phone-case.png"
+        },
+        {
+          "model": "Huawei P series",
+          "image": "phone-case.png"
+        }
+      ]
+    },
+    {
+      "name": "Pin",
+      "id": "misc05",
+      "price": "5.99",
+      "sizes": [],
+      "description": "5 inch yellow button with safety pin connector.",
+      "variants": [
+        {
+          "color": "default",
+          "image": "pin.png"
+        }
+      ]
+    },
+    {
+      "name": "Shower Curtain",
+      "id": "misc06",
+      "price": "23.99",
+      "sizes": [],
+      "description": "Waterproof shower curtain. Hanging clips not included.",
+      "variants": [
+        {
+          "color": "default",
+          "image": "shower-curtain.png"
+        }
+      ]
+    },
+    {
+      "name": "Sticker",
+      "id": "misc07",
+      "price": 2.99,
+      "sizes": [],
+      "description": "Re-stickable glossy vinyl sticker with the Code The Dream logo. Laptop-safe",
+      "colors": [
+        {
+          "color": "blue",
+          "image": "sticker-blue.png"
+        },
+        {
+          "color": "orange",
+          "image": "sticker-orange.png"
+        }
+      ]
+    },
+    {
+      "name": "Tee Shirt",
+      "id": "ts01black",
+      "price": 19.99,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL",
+        "3XL"
+      ],
+      "description": "Comfortable cotton t-shirt with the Code The Dream logo.",
+      "variants": [
+        {
+          "color": "black",
+          "image": "tee-black.png"
+        },
+        {
+          "color": "gray",
+          "image": "tee-gray.png"
+        }
+      ]
+    },
+    {
+      "name": "Throw Pillow",
+      "id": "misc08peach",
+      "price": 44.99,
+      "sizes": [],
+      "description": "Comfortable throw pillow and an excellent conversation starter.",
+      "variants": [
+        {
+          "color": "peach",
+          "image": "throw-pillow-peach.png"
+        },
+        {
+          "color": "turquoise",
+          "image": "throw-pillow-turquoise.png"
+        }
+      ]
+    }
+  ]
+}
