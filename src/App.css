@@ -1,12 +1,156 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  background-color: #e7f6f4;
+  padding: 0 1rem;
 }
 
-.coming-soon {
+header {
+  background-color: var(--light-blue);
+  height: var(--header-height);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 1rem;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  will-change: transform;
+}
+
+.siteBranding {
+  display: flex;
+  flex-direction: row;
+  height: calc(160px - 2rem);
+  align-items: center;
+}
+
+.siteBranding img {
+  width: 100px;
+  margin-right: 1rem;
+}
+
+h1 {
+  font-family: "WorkSans Bold", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+
+main {
+  margin: auto;
+}
+
+
+.productList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background-color: var(--medium-blue);
+  border: 3px solid var(--dark-blue);
+  border-radius: var(--medium-radius);
+  justify-content: center;
+}
+
+.productCard {
+  background-color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  max-width: 200px;
+  border-radius: var(--medium-radius);
+  justify-content: space-between;
+}
+
+button:disabled {
+  pointer-events: none;
+}
+
+.productButtons {
+  width: 100%;
+  height: 4rem;
+  display: flex;
+}
+
+.productButtons button {
+  border: none;
+  background-color: rgb(from var(--medium-blue) r g b /.5);
+  width: 100%;
+}
+
+
+.productButtons button:hover {
+  background-color: rgb(from var(--medium-blue) r g b /.25);
+}
+
+.productButtons button:active {
+  background-color: rgb(from var(--light-blue) r g b /.25);
+}
+
+.productPreview {
+  border-radius: var(--medium-radius);
+  overflow: hidden;
+}
+
+.productCopy {
+  padding: .25rem;
+}
+
+.productCopy p {
+  padding: .5rem;
+}
+
+.shoppingCart {
+  height: 75px;
+  width: 75px;
+  position: relative;
+}
+
+.shoppingCart {}
+
+
+.shoppingCart button {
+  width: 100%;
+  padding: .5rem;
+  background-color: transparent;
+  border-width: 0;
+  border-radius: var(--medium-radius);
+}
+
+.shoppingCart button:hover {
+  transform: scale(102%);
+  background-color: var(--medium-blue);
+}
+
+.shoppingCart button:active {
+  transform: scale(98%);
+  background-color: var(--medium-blue);
+}
+
+.shoppingCart button:focus {
+  transform: scale(98%);
+  background-color: var(--medium-blue);
+}
+
+.cartCount {
+  color: #fff;
+  position: absolute;
+  top: 45%;
+  right: 45%;
+  width: 40px;
+  transform: translate(50%, -50%);
+  height: 40px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--light-blue);
 }
