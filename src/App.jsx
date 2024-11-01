@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import './assets/css-reset.css';
 import catalog from './assets/catalog.json';
@@ -7,7 +7,7 @@ import ProductList from './ProductList';
 import ProductCard from './ProductCard';
 
 function App() {
-  const [inventory, setInventory] = useState(catalog.products);
+  const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
   const year = useRef(
     (() => {
@@ -16,19 +16,32 @@ function App() {
     })()
   );
 
-  function promoteProduct() {
-    return (
-      <ProductCard
-        name="Special Limited Edition Tee!"
-        description="Special limited edition neon green shirt with a metallic Code the Dream Logo shinier than the latest front-end framework! Signed by the legendary Frank!"
-      />
-    );
+  useEffect(() => {
+    setInventory([...catalog.products]);
+  }, []);
+
+  function handleAddItemToCart(id) {
+    const target = inventory.find((item) => item.id === id);
+    if (!target) {
+      console.error('cart error: item not found');
+      return;
+    }
+    const cartItem = { ...target, cartItemId: Date.now() };
+    setCart([...cart, cartItem]);
   }
+  function handleRemoveItemFromCart(cartItemId) {
+    const updatedCart = cart.filter((item) => item.cartItemId !== cartItemId);
+    setCart([...updatedCart]);
+  }
+
   return (
     <>
       <Header cart={cart} />
       <main>
-        <ProductList inventory={inventory}>{promoteProduct()}</ProductList>
+        <ProductList
+          inventory={inventory}
+          handleAddItemToCart={handleAddItemToCart}
+        ></ProductList>
       </main>
       <footer>
         <p>
