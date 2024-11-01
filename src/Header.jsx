@@ -1,7 +1,17 @@
+import { useEffect } from 'react';
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
 import shoppingCart from './assets/icons/shoppingCart.svg';
 
 function Header({ cart }) {
+  useEffect(() => {
+    cart.forEach((item) => {
+      console.log(item.name, item.cartItemId);
+    });
+    if (cart.length > 0) {
+      console.log('--end of cart--');
+    }
+  });
+
   return (
     <header>
       <div className="siteBranding">
