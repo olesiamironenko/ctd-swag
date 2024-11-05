@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
 import shoppingCart from './assets/icons/shoppingCart.svg';
 
-function Header({ cart }) {
+function Header({ cart, handleOpenCart }) {
   useEffect(() => {
     cart.forEach((item) => {
       console.log(item.name, item.cartItemId);
@@ -19,7 +19,7 @@ function Header({ cart }) {
         <h1>CTD Swag</h1>
       </div>
       <div className="shoppingCart">
-        <button type="button">
+        <button type="button" onClick={handleOpenCart}>
           <img src={shoppingCart} alt="" />
           <p className="cartCount">{cart.length}</p>
         </button>
