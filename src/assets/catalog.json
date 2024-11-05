@@ -24,7 +24,7 @@
     {
       "name": "Canvas Bag",
       "id": "bag01",
-      "price": "22.99",
+      "price": 22.99,
       "sizes": [],
       "description": "Durable canvas tote bag with straps",
       "variants": [
@@ -41,7 +41,7 @@
     {
       "name": "Clock",
       "id": "misc01",
-      "price": "22.99",
+      "price": 22.99,
       "sizes": [],
       "description": "Battery-powered wall clock",
       "variants": [
@@ -54,7 +54,7 @@
     {
       "name": "Mouse Pad",
       "id": "misc02",
-      "price": "12.99",
+      "price": 12.99,
       "sizes": [],
       "description": "A pad perfect for mousing",
       "variants": [
@@ -109,7 +109,7 @@
     {
       "name": "Pin",
       "id": "misc05",
-      "price": "5.99",
+      "price": 5.99,
       "sizes": [],
       "description": "5 inch yellow button with safety pin connector.",
       "variants": [
@@ -122,7 +122,7 @@
     {
       "name": "Shower Curtain",
       "id": "misc06",
-      "price": "23.99",
+      "price": 23.99,
       "sizes": [],
       "description": "Waterproof shower curtain. Hanging clips not included.",
       "variants": [
