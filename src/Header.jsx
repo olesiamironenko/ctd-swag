@@ -1,16 +1,10 @@
-import { useEffect } from 'react';
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
 import shoppingCart from './assets/icons/shoppingCart.svg';
 
 function Header({ cart, handleOpenCart }) {
-  useEffect(() => {
-    cart.forEach((item) => {
-      console.log(item.name, item.cartItemId);
-    });
-    if (cart.length > 0) {
-      console.log('--end of cart--');
-    }
-  });
+  function getItemCount() {
+    return cart.reduce((acc, item) => acc + item.itemCount, 0);
+  }
 
   return (
     <header>
@@ -21,7 +15,7 @@ function Header({ cart, handleOpenCart }) {
       <div className="shoppingCart">
         <button type="button" onClick={handleOpenCart}>
           <img src={shoppingCart} alt="" />
-          <p className="cartCount">{cart.length}</p>
+          <p className="cartCount">{getItemCount()}</p>
         </button>
       </div>
     </header>

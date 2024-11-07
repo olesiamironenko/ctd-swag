@@ -22,13 +22,22 @@ function App() {
   }, []);
 
   function handleAddItemToCart(id) {
-    const target = inventory.find((item) => item.id === id);
-    if (!target) {
+    const inventoryItem = inventory.find((item) => item.id === id);
+    if (!inventoryItem) {
       console.error('cart error: item not found');
       return;
     }
-    const cartItem = { ...target, cartItemId: Date.now() };
-    setCart([...cart, cartItem]);
+    const itemToUpdate = cart.find((item) => item.id === id);
+    let updatedCartItem;
+    if (itemToUpdate) {
+      updatedCartItem = {
+        ...itemToUpdate,
+        itemCount: itemToUpdate.itemCount + 1,
+      };
+    } else {
+      updatedCartItem = { ...inventoryItem, itemCount: 1 };
+    }
+    setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
   }
   function handleRemoveItemFromCart(cartItemId) {
     const updatedCart = cart.filter((item) => item.cartItemId !== cartItemId);
