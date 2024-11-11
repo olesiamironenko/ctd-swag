@@ -39,10 +39,6 @@ function App() {
     }
     setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
   }
-  function handleRemoveItemFromCart(cartItemId) {
-    const updatedCart = cart.filter((item) => item.cartItemId !== cartItemId);
-    setCart([...updatedCart]);
-  }
 
   function handleCloseCart() {
     //prevents re-render if unchanged
@@ -66,7 +62,13 @@ function App() {
           inventory={inventory}
           handleAddItemToCart={handleAddItemToCart}
         ></ProductList>
-        {isCartOpen && <Cart cart={cart} handleCloseCart={handleCloseCart} />}
+        {isCartOpen && (
+          <Cart
+            cart={cart}
+            setCart={setCart}
+            handleCloseCart={handleCloseCart}
+          />
+        )}
       </main>
       <footer>
         <p>
