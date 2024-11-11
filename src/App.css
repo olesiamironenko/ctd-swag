@@ -110,9 +110,6 @@ button:disabled {
   position: relative;
 }
 
-.shoppingCart {}
-
-
 .shoppingCart button {
   width: 100%;
   padding: .5rem;
@@ -195,6 +192,18 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.cartScreen {
+  backdrop-filter: blur(4px);
+  border-radius: var(--medium-radius);
+  content: "";
+  background-color: rgb(from var(--light-blue) r g b /.25);
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
 }
 
 footer {
