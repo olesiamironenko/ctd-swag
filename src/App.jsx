@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import './assets/css-reset.css';
 import catalog from './assets/catalog.json';
+import Cart from './Cart';
 import Header from './Header';
 import ProductList from './ProductList';
-import ProductCard from './ProductCard';
 
 function App() {
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const year = useRef(
     (() => {
       const now = new Date(Date.now());
@@ -21,27 +22,53 @@ function App() {
   }, []);
 
   function handleAddItemToCart(id) {
-    const target = inventory.find((item) => item.id === id);
-    if (!target) {
+    const inventoryItem = inventory.find((item) => item.id === id);
+    if (!inventoryItem) {
       console.error('cart error: item not found');
       return;
     }
-    const cartItem = { ...target, cartItemId: Date.now() };
-    setCart([...cart, cartItem]);
+    const itemToUpdate = cart.find((item) => item.id === id);
+    let updatedCartItem;
+    if (itemToUpdate) {
+      updatedCartItem = {
+        ...itemToUpdate,
+        itemCount: itemToUpdate.itemCount + 1,
+      };
+    } else {
+      updatedCartItem = { ...inventoryItem, itemCount: 1 };
+    }
+    setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
   }
-  function handleRemoveItemFromCart(cartItemId) {
-    const updatedCart = cart.filter((item) => item.cartItemId !== cartItemId);
-    setCart([...updatedCart]);
+
+  function handleCloseCart() {
+    //prevents re-render if unchanged
+    if (isCartOpen) {
+      setIsCartOpen(false);
+    }
+  }
+
+  function handleOpenCart() {
+    //prevents re-render if unchanged
+    if (!isCartOpen) {
+      setIsCartOpen(true);
+    }
   }
 
   return (
     <>
-      <Header cart={cart} />
+      <Header cart={cart} handleOpenCart={handleOpenCart} />
       <main>
         <ProductList
           inventory={inventory}
           handleAddItemToCart={handleAddItemToCart}
         ></ProductList>
+        {isCartOpen && (
+          <Cart
+            cart={cart}
+            setCart={setCart}
+            handleCloseCart={handleCloseCart}
+          />
+        )}
       </main>
       <footer>
         <p>
