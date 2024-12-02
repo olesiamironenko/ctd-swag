@@ -1,21 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import './assets/css-reset.css';
 import catalog from './assets/catalog.json';
-import Cart from './Cart';
-import Header from './Header';
-import ProductList from './ProductList';
+import Cart from './features/Cart/Cart';
+import Footer from './layout/Footer';
+import Header from './layout/Header';
+import ProductList from './features/ProductList/ProductList';
 
 function App() {
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const year = useRef(
-    (() => {
-      const now = new Date(Date.now());
-      return now.getFullYear();
-    })()
-  );
 
   useEffect(() => {
     setInventory([...catalog.products]);
@@ -70,12 +65,7 @@ function App() {
           />
         )}
       </main>
-      <footer>
-        <p>
-          Made with ❤️ | &copy; {year.current}{' '}
-          <a href="https://codethedream.org/">CTD </a>
-        </p>
-      </footer>
+      <Footer />
     </>
   );
 }
