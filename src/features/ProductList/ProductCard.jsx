@@ -1,10 +1,10 @@
-import placeholder from './assets/placeholder.png';
+import placeholder from '../../assets/placeholder.png';
 
 function ProductCard({ id, name, description, handleAddItemToCart }) {
   return (
     <li className="productCard">
       <div className="productPreview">
-        <img src={placeholder} alt="" />
+        <img src={placeholder} alt=" " />
       </div>
       <div className="productCopy">
         <h2>{name}</h2>

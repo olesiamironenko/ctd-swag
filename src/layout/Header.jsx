@@ -1,5 +1,5 @@
-import ctdLogo from './assets/icons/mono-blue-logo.svg';
-import shoppingCart from './assets/icons/shoppingCart.svg';
+import ctdLogo from '../assets/icons/mono-blue-logo.svg';
+import shoppingCart from '../assets/icons/shoppingCart.svg';
 
 function Header({ cart, handleOpenCart }) {
   function getItemCount() {
