@@ -56,7 +56,8 @@ main {
 }
 
 .productCard {
-  background-color: #fff;
+  position: relative;
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,6 +65,74 @@ main {
   border-radius: var(--medium-radius);
   justify-content: space-between;
 }
+
+.productVariantsWrapper {
+  position: absolute;
+  z-index: 1;
+  background-color: var(--light-red);
+  border: 3px solid var(--dark-blue);
+  border-radius: var(--medium-radius);
+  padding: .5rem;
+  top: 50px;
+}
+
+.productVariantsWrapper ul {
+  padding: 0;
+  list-style: none;
+}
+
+.productVariant {
+  display: grid;
+  background-color: white;
+  color: var(--dark-blue);
+  grid-template-columns: 1fr 200px;
+  margin-bottom: .25rem;
+  border: 1px solid var(--dark-blue);
+  border-radius: var(--small-radius);
+  padding: .5rem;
+  gap: .5rem;
+}
+
+.productVariant:last-child {
+  margin-bottom: 1rem;
+}
+
+.productVariantsWrapper button {
+  width: 100%;
+  font-weight: bold;
+  border: none;
+  padding: 1rem;
+  border-radius: var(--small-radius);
+}
+
+.variantDetails button {
+  color: unset;
+  background-color: rgb(from var(--medium-blue) r g b /.5);
+}
+
+.variantDetails button:hover {
+  background-color: rgb(from var(--medium-blue) r g b /.25);
+}
+
+.variantDetails button:active {
+  background-color: rgb(from var(--light-blue) r g b /.25);
+}
+
+.variantsCloseButton {
+  width: 100%;
+  font-weight: bold;
+  color: var(--light-blue);
+  background-color: var(--dark-blue);
+  padding: 1rem;
+}
+
+.variantPreview {
+  width: 125px;
+  border-radius: var(--small-radius) 0;
+  overflow: hidden;
+  padding: .25rem;
+}
+
 
 button:disabled {
   pointer-events: none;
@@ -151,6 +220,7 @@ button:disabled {
 .cartList {
   list-style: none;
   padding: 0;
+
 }
 
 .cartListItem {
@@ -163,6 +233,7 @@ button:disabled {
   margin: 0;
   align-items: center;
   margin-bottom: .25rem;
+  padding-left: .75rem;
 }
 
 .cartListItem h2 {
@@ -192,6 +263,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 1;
 }
 
 .cartScreen {
@@ -204,6 +276,7 @@ button:disabled {
   bottom: 4px;
   left: 4px;
   right: 4px;
+  z-index: 1;
 }
 
 footer {
