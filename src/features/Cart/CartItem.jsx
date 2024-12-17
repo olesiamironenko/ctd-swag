@@ -4,7 +4,10 @@ function CartItem({ item, onHandleItemUpdate }) {
   return (
     <li className="cartListItem">
       <img src={placeholder} alt="" />
-      <h2>{item.name}</h2>
+      <div className="cartListItemDetails">
+        <h2>{item.baseName}</h2>
+        {item.variantName !== 'Default' ? <p>{item.variantName}</p> : null}
+      </div>
       <div className="cartListItemSubtotal">
         <label>
           Count:{' '}
