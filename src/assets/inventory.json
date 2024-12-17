@@ -1,8 +1,9 @@
 {
-  "products": [
+  "inventory": [
     {
-      "baseItem": "Bucket Hat",
-      "variant": "Black",
+      "id": 1,
+      "baseName": "Bucket Hat",
+      "variantName": "Black",
       "price": 22.99,
       "baseDescription": "Protect your head from the sun with this stylish bucket hat",
       "variantDescription": "Black with an orange logo",
@@ -10,8 +11,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Bucket Hat",
-      "variant": "Peach",
+      "id": 2,
+      "baseName": "Bucket Hat",
+      "variantName": "Peach",
       "price": 22.99,
       "baseDescription": "Protect your head from the sun with this stylish bucket hat",
       "variantDescription": "Pale peach with an orange logo",
@@ -19,8 +21,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Canvas Bag",
-      "variant": "Blue",
+      "id": 3,
+      "baseName": "Canvas Bag",
+      "variantName": "Blue",
       "price": 22.99,
       "baseDescription": "Durable canvas tote back with straps",
       "variantDescription": "Natural cotton canvas with a dark blue logo",
@@ -28,8 +31,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Canvas Bag",
-      "variant": "Orange",
+      "id": 4,
+      "baseName": "Canvas Bag",
+      "variantName": "Orange",
       "price": 22.99,
       "baseDescription": "Durable canvas tote back with straps",
       "variantDescription": "Natural cotton canvas with an orange logo",
@@ -37,8 +41,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Clock",
-      "variant": "Default",
+      "id": 5,
+      "baseName": "Clock",
+      "variantName": "Default",
       "price": 27.99,
       "baseDescription": "Battery-powered wall clock. White face with black logo",
       "variantDescription": "",
@@ -46,8 +51,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Mouse Pad",
-      "variant": "Default",
+      "id": 6,
+      "baseName": "Mouse Pad",
+      "variantName": "Default",
       "price": 12.99,
       "baseDescription": "A pad perfect for mousing. White background with dark blue logo",
       "variantDescription": "",
@@ -55,8 +61,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Notebook",
-      "variant": "Default",
+      "id": 7,
+      "baseName": "Notebook",
+      "variantName": "Default",
       "price": 17.99,
       "baseDescription": "Black spiral-bound notebook with blue Code the Dream logo",
       "variantDescription": "",
@@ -64,8 +71,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Phone Case",
-      "variant": "iPhone",
+      "id": 8,
+      "baseName": "Phone Case",
+      "variantName": "iPhone",
       "price": 34.99,
       "baseDescription": "Bold orange case - stylish and protects phones from drops up to 703 feet",
       "variantDescription": "Works with iPhone",
@@ -73,8 +81,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Phone Case",
-      "variant": "Samsung Galaxy",
+      "id": 9,
+      "baseName": "Phone Case",
+      "variantName": "Samsung Galaxy",
       "price": 34.99,
       "baseDescription": "Bold orange case - stylish and protects phones from drops up to 703 feet",
       "variantDescription": "Works with Samsung Galaxy",
@@ -82,8 +91,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Phone Case",
-      "variant": "Google Pixel",
+      "id": 10,
+      "baseName": "Phone Case",
+      "variantName": "Google Pixel",
       "price": 34.99,
       "baseDescription": "Bold orange case - stylish and protects phones from drops up to 703 feet",
       "variantDescription": "Works with Google Pixel",
@@ -91,8 +101,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Phone Case",
-      "variant": "OnePlus",
+      "id": 11,
+      "baseName": "Phone Case",
+      "variantName": "OnePlus",
       "price": 34.99,
       "baseDescription": "Bold orange case - stylish and protects phones from drops up to 703 feet",
       "variantDescription": "Works with OnePlus",
@@ -100,8 +111,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Phone Case",
-      "variant": "Huwei P Series",
+      "id": 12,
+      "baseName": "Phone Case",
+      "variantName": "Huwei P Series",
       "price": 34.99,
       "baseDescription": "Bold orange case - stylish and protects phones from drops up to 703 feet",
       "variantDescription": "Works with Huwei P Series",
@@ -109,8 +121,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Pin",
-      "variant": "Default",
+      "id": 13,
+      "baseName": "Pin",
+      "variantName": "Default",
       "price": 5.99,
       "baseDescription": "5 inch yellow button with a safety pin attacher",
       "variantDescription": "",
@@ -118,8 +131,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Shower Curtain",
-      "variant": "Default",
+      "id": 14,
+      "baseName": "Shower Curtain",
+      "variantName": "Default",
       "price": 23.99,
       "baseDescription": "Waterproof shower curtain - hanging clips not included",
       "variantDescription": "",
@@ -127,8 +141,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Sticker",
-      "variant": "Blue",
+      "id": 15,
+      "baseName": "Sticker",
+      "variantName": "Blue",
       "price": 2.99,
       "baseDescription": "Re-stickable glossy vinyl sticker with the Code The Dream logo. Laptop-safe",
       "variantDescription": "Dark blue",
@@ -136,8 +151,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Sticker",
-      "variant": "Orange",
+      "id": 16,
+      "baseName": "Sticker",
+      "variantName": "Orange",
       "price": 2.99,
       "baseDescription": "Re-stickable glossy vinyl sticker with the Code The Dream logo. Laptop-safe",
       "variantDescription": "Orange",
@@ -145,8 +161,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Throw Pillow",
-      "variant": "Peach",
+      "id": 17,
+      "baseName": "Throw Pillow",
+      "variantName": "Peach",
       "price": 44.99,
       "baseDescription": "Comfortable throw pillow and an excellent conversation starter",
       "variantDescription": "Peach cotton with large pale peach logo",
@@ -154,8 +171,9 @@
       "inStock": "TRUE"
     },
     {
-      "baseItem": "Throw Pillow",
-      "variant": "Turquoise",
+      "id": 18,
+      "baseName": "Throw Pillow",
+      "variantName": "Turquoise",
       "price": 44.99,
       "baseDescription": "Comfortable throw pillow and an excellent conversation starter",
       "variantDescription": "Turquoise cotton with large dark blue logo",
