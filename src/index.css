@@ -36,6 +36,6 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #12284c;
-  color: #12284c;
+  background-color: var(--dark-blue);
+  color: var(--dark-blue);
 }
