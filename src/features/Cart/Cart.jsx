@@ -15,7 +15,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
 
   function getCartPrice() {
     return workingCart
-      .reduce((acc, item) => acc + item.price * item.itemCount, 0)
+      .reduce((acc, item) => acc + item.price * item.quantity, 0)
       .toFixed(2);
   }
 
@@ -38,7 +38,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
     // create new object instead of updating old
     const updatedProduct = {
       ...targetProduct,
-      itemCount: parseInt(event.target.value, 10),
+      quantity: parseInt(event.target.value, 10),
     };
     //avoid re-ordering array when updating cart item
     setWorkingCart([
@@ -55,7 +55,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
   }
 
   function removeEmptyItems(cart) {
-    return cart.filter((i) => i.itemCount !== 0);
+    return cart.filter((i) => i.quantity !== 0);
   }
 
   function handleConfirm(e) {
@@ -76,7 +76,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
               {workingCart.map((item) => {
                 return (
                   <CartItem
-                    key={item.id}
+                    key={item.id || -1}
                     item={item}
                     onHandleItemUpdate={handleUpdateField}
                   />
