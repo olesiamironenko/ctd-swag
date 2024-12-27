@@ -9,17 +9,17 @@
 header {
   background-color: var(--light-blue);
   height: var(--header-height);
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 100px 100px;
   align-items: center;
   padding-top: 1rem;
-  justify-content: space-between;
   position: sticky;
   top: 0;
   will-change: transform;
 }
 
 .siteBranding {
+  position: relative;
   display: flex;
   flex-direction: row;
   height: calc(160px - 2rem);
@@ -37,12 +37,108 @@ h1 {
   line-height: 1.1;
 }
 
+h2,
+h3,
+h4,
+h6 {
+  font-family: "WorkSans Bold", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
 
 main {
   margin: auto;
   position: relative;
 }
 
+.authForm,
+.loadingScreen {
+  font-size: 1.5rem;
+  position: absolute;
+  background-color: var(--light-blue);
+  z-index: 1;
+  top: 1rem;
+  padding: 1rem;
+  border-radius: var(--medium-radius);
+  border: 3px solid var(--dark-blue);
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  transform: translateX(-50%);
+  justify-content: space-between;
+  height: 360px;
+}
+
+.authForm .inputGroup {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+
+}
+
+.authButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.authButtons button,
+.authButton {
+  font-weight: bold;
+  border: none;
+  padding: 1rem;
+  border-radius: var(--small-radius);
+  color: unset;
+  background-color: rgb(from var(--medium-blue) r g b /.5);
+}
+
+.authButtons button:hover,
+.authButton:hover {
+  background-color: rgb(from var(--medium-blue) r g b /.25);
+}
+
+.authButtons button:active,
+.authButton:active {
+  background-color: rgb(from var(--light-blue) r g b /.25);
+}
+
+.authButtons button:disabled {
+  background-color: rgb(from var(--medium-gray) r g b /.5);
+  color: rgb(from var(--dark-blue) r g b /.5);
+}
+
+.signOut {
+  padding: .5rem;
+}
+
+.loadingScreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.spinnerWrapper {
+  height: 100px;
+  width: 100px;
+}
+
+.spinnerWrapper img {
+  height: 100%;
+}
+
+.spinnerWrapper img {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .productList {
   display: flex;
@@ -266,7 +362,8 @@ button:disabled {
   z-index: 1;
 }
 
-.cartScreen {
+.cartScreen,
+.authFormScreen {
   backdrop-filter: blur(4px);
   border-radius: var(--medium-radius);
   content: "";
@@ -278,6 +375,7 @@ button:disabled {
   right: 4px;
   z-index: 1;
 }
+
 
 footer {
   position: sticky;
