@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import './assets/css-reset.css';
-import AuthForm from './features/Auth/AuthForm';
+import AuthDialog from './features/Auth/AuthDialog';
 import Cart from './features/Cart/Cart';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
@@ -12,10 +12,11 @@ function App() {
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isAuthFormOpen, setIsAuthFormOpen] = useState(false);
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState('');
+  const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -52,7 +53,38 @@ function App() {
       setCart([...userData.cartItems]);
       setAuthError('');
       setIsAuthenticating(false);
-      setIsAuthFormOpen(false);
+      setIsAuthDialogOpen(false);
+    } catch (error) {
+      setIsAuthenticating(false);
+      console.log(error.message);
+    }
+  }
+
+  async function handleRegister(user) {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: { 'Content-Type': 'application/json' },
+    };
+    try {
+      setIsAuthenticating(true);
+      const resp = await fetch(`${baseUrl}/auth/register`, options);
+      console.log(resp);
+      if (!resp.ok) {
+        setAuthError('failed to create new user account');
+        throw new Error(resp.status);
+      }
+      const userData = await resp.json();
+      setUser({
+        id: userData.id,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        token: userData.token,
+      });
+      setAuthError('');
+      setIsAuthenticating(false);
+      setIsAuthDialogOpen(false);
     } catch (error) {
       setIsAuthenticating(false);
       console.log(error.message);
@@ -87,22 +119,36 @@ function App() {
     setCart([]);
   }
 
+  function handleOpenAuthDialog(option) {
+    switch (option) {
+      case 'register':
+        setIsRegistering(true);
+        break;
+      default:
+        setIsRegistering(false);
+        break;
+    }
+    setIsAuthDialogOpen(true);
+  }
+
   return (
     <>
       <Header
         cart={cart}
         handleOpenCart={() => setIsCartOpen(true)}
-        handleOpenAuthForm={() => setIsAuthFormOpen(true)}
+        handleOpenAuthDialog={handleOpenAuthDialog}
         handleLogOut={handleLogOut}
         user={user}
       />
       <main>
-        {isAuthFormOpen && (
-          <AuthForm
-            handleCloseAuthForm={() => setIsAuthFormOpen(false)}
+        {isAuthDialogOpen && (
+          <AuthDialog
+            handleCloseAuthDialog={() => setIsAuthDialogOpen(false)}
             handleAuthenticate={handleAuthenticate}
+            handleRegister={handleRegister}
             authError={authError}
             isAuthenticating={isAuthenticating}
+            isRegistering={isRegistering}
             resetAuthError={() => setAuthError('')}
           />
         )}

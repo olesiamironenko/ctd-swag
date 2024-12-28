@@ -5,17 +5,15 @@ import shoppingCart from '../assets/icons/shoppingCart.svg';
 function Header({
   cart,
   handleOpenCart,
-  handleOpenAuthForm,
+  handleOpenAuthDialog,
   user,
   handleLogOut,
 }) {
   const [cartCount, setCartCount] = useState(0);
   useEffect(() => {
-    console.log(cart);
     if (cart.length > 0) {
       setCartCount(
         cart.reduce((acc, item) => {
-          console.log(acc, ' | ', item);
           return acc + item.quantity;
         }, 0)
       );
@@ -38,13 +36,23 @@ function Header({
             </button>
           </>
         ) : (
-          <button
-            className="authButton"
-            type="button"
-            onClick={handleOpenAuthForm}
-          >
-            Log in
-          </button>
+          <>
+            <button
+              className="authButton"
+              type="button"
+              onClick={() => handleOpenAuthDialog('login')}
+            >
+              Log in
+            </button>
+            <span> or </span>
+            <button
+              className="authButton"
+              type="button"
+              onClick={() => handleOpenAuthDialog('register')}
+            >
+              Register
+            </button>
+          </>
         )}
       </div>
       <div className="shoppingCart">
