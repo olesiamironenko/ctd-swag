@@ -35,9 +35,6 @@ function App() {
       }
     })();
   }, []);
-
-  //-[ ] assume logged in
-  //-[ ] local only
   async function handleSyncCart(workingCart) {
     if (!user.id) {
       setCart(workingCart);
