@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import CartItem from './CartItem';
 
-function Cart({ cart, handleCloseCart, setCart }) {
+function Cart({
+  cart,
+  handleCloseCart,
+  handleSyncCart,
+  cartError,
+  isCartSyncing,
+}) {
   const [workingCart, setWorkingCart] = useState(cart);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
   //resets `workingCart`
   useEffect(() => {
-    if (isFormDirty) {
+    console.log('firing! ', Date.now());
+    if (isFormDirty || isCartSyncing) {
       return;
     }
     setWorkingCart(cart);
-  }, [cart, isFormDirty]);
+  }, [cart, isFormDirty, isCartSyncing]);
 
   function getCartPrice() {
     return workingCart
@@ -25,8 +32,8 @@ function Cart({ cart, handleCloseCart, setCart }) {
     if (!isFormDirty) {
       setIsFormDirty(true);
     }
-    const targetProduct = cart.find((item) => item.id === id);
-    const targetIndex = cart.findIndex((item) => item.id === id);
+    const targetProduct = cart.find((item) => item.productId === id);
+    const targetIndex = cart.findIndex((item) => item.productId === id);
     if (!targetProduct) {
       console.error('cart error: item not found');
       return;
@@ -60,7 +67,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
 
   function handleConfirm(e) {
     e.preventDefault();
-    setCart([...removeEmptyItems(workingCart)]);
+    handleSyncCart([...removeEmptyItems(workingCart)]);
     setIsFormDirty(false);
   }
 
@@ -76,7 +83,7 @@ function Cart({ cart, handleCloseCart, setCart }) {
               {workingCart.map((item) => {
                 return (
                   <CartItem
-                    key={item.id || -1}
+                    key={item.id || Date.now()}
                     item={item}
                     onHandleItemUpdate={handleUpdateField}
                   />
@@ -92,9 +99,12 @@ function Cart({ cart, handleCloseCart, setCart }) {
           </form>
         )}
         <h2>Cart Total: ${getCartPrice()}</h2>
-        <button disabled={isFormDirty} onClick={handleCloseCart}>
-          CloseCart
-        </button>
+        <div className="cartFooter">
+          <button disabled={isFormDirty} onClick={handleCloseCart}>
+            CloseCart
+          </button>
+          {cartError && <p>{cartError}</p>}
+        </div>
       </div>
     </>
   );

@@ -14,7 +14,9 @@ function CartItem({ item, onHandleItemUpdate }) {
           <input
             type="number"
             value={item.quantity}
-            onChange={(event) => onHandleItemUpdate({ event, id: item.id })}
+            onChange={(event) =>
+              onHandleItemUpdate({ event, id: item.productId })
+            }
           />
         </label>
         <p>Subtotal: ${(item.price * item.quantity).toFixed(2) || '0.00'}</p>

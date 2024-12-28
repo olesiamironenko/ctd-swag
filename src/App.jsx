@@ -12,10 +12,13 @@ function App() {
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartSyncing, setIsCartSyncing] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState('');
+  const [cartError, setCartError] = useState('');
+
   const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
@@ -32,6 +35,47 @@ function App() {
       }
     })();
   }, []);
+
+  //-[ ] assume logged in
+  //-[ ] local only
+  async function handleSyncCart(workingCart) {
+    if (!user.id) {
+      setCart(workingCart);
+      return;
+    }
+    setIsCartSyncing(true);
+    const options = {
+      method: 'PATCH',
+      body: JSON.stringify({ cartItems: workingCart }),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    try {
+      const resp = await fetch(`${baseUrl}/cart`, options);
+      if (!resp.ok) {
+        console.log('resp not okay');
+        if (resp.status === 401) {
+          throw new Error('Not authorized. Please log in.');
+        }
+        const cartData = await resp.json();
+        if (cartData.error) {
+          throw new Error(cartData.error);
+        }
+        throw new Error('Error occurred while syncing');
+      }
+      const cartData = await resp.json();
+      setCart([...cartData]);
+
+      //clean up state variables
+      setIsCartSyncing(false);
+      setCartError('');
+    } catch (error) {
+      setCartError(error.message);
+      setIsCartSyncing(false);
+    }
+  }
 
   async function handleAuthenticate(credentials) {
     const options = {
@@ -69,7 +113,6 @@ function App() {
     try {
       setIsAuthenticating(true);
       const resp = await fetch(`${baseUrl}/auth/register`, options);
-      console.log(resp);
       if (!resp.ok) {
         setAuthError('failed to create new user account');
         throw new Error(resp.status);
@@ -92,11 +135,12 @@ function App() {
   }
 
   function handleAddItemToCart(id) {
+    //TODO: if logged in, post item to /cart to upsert cartItem
     const inventoryItem = inventory.find((item) => item.id === id);
     if (!inventoryItem) {
       return;
     }
-    const itemToUpdate = cart.find((item) => item.id === id);
+    const itemToUpdate = cart.find((item) => item.productId === id);
     let updatedCartItem;
     if (itemToUpdate) {
       updatedCartItem = {
@@ -104,9 +148,13 @@ function App() {
         quantity: itemToUpdate.quantity + 1,
       };
     } else {
-      updatedCartItem = { ...inventoryItem, quantity: 1 };
+      updatedCartItem = {
+        ...inventoryItem,
+        quantity: 1,
+        productId: inventoryItem.id,
+      };
     }
-    setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
+    setCart([...cart.filter((item) => item.productId !== id), updatedCartItem]);
   }
 
   function handleCloseCart() {
@@ -158,8 +206,10 @@ function App() {
         ></ProductList>
         {isCartOpen && (
           <Cart
+            cartError={cartError}
+            isCartSyncing={isCartSyncing}
             cart={cart}
-            setCart={setCart}
+            handleSyncCart={handleSyncCart}
             handleCloseCart={handleCloseCart}
           />
         )}
