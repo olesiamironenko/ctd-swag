@@ -366,6 +366,10 @@ button:disabled {
   z-index: 1;
 }
 
+.cartFooter button {
+  width: 100%;
+}
+
 .cartScreen,
 .authFormScreen {
   backdrop-filter: blur(4px);
