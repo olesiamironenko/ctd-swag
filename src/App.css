@@ -10,7 +10,7 @@ header {
   background-color: var(--light-blue);
   height: var(--header-height);
   display: grid;
-  grid-template-columns: 1fr 100px 100px;
+  grid-template-columns: 1fr 225px 100px;
   align-items: center;
   padding-top: 1rem;
   position: sticky;
@@ -50,6 +50,10 @@ main {
   position: relative;
 }
 
+.authForm>*:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
 .authForm,
 .loadingScreen {
   font-size: 1.5rem;
@@ -65,7 +69,7 @@ main {
   left: 50%;
   transform: translateX(-50%);
   justify-content: space-between;
-  height: 360px;
+  /* height: 360px; */
 }
 
 .authForm .inputGroup {
@@ -76,12 +80,12 @@ main {
 
 }
 
-.authButtons {
+.authSubmitButtons {
   display: flex;
   justify-content: space-around;
 }
 
-.authButtons button,
+.authSubmitButtons button,
 .authButton {
   font-weight: bold;
   border: none;
@@ -91,17 +95,17 @@ main {
   background-color: rgb(from var(--medium-blue) r g b /.5);
 }
 
-.authButtons button:hover,
+.authSubmitButtons button:hover,
 .authButton:hover {
   background-color: rgb(from var(--medium-blue) r g b /.25);
 }
 
-.authButtons button:active,
+.authSubmitButtons button:active,
 .authButton:active {
   background-color: rgb(from var(--light-blue) r g b /.25);
 }
 
-.authButtons button:disabled {
+.authSubmitButtons button:disabled {
   background-color: rgb(from var(--medium-gray) r g b /.5);
   color: rgb(from var(--dark-blue) r g b /.5);
 }
@@ -381,4 +385,15 @@ footer {
   position: sticky;
   bottom: 0;
   background-color: var(--light-blue);
+}
+
+@media screen and (max-width:650px) {
+  header {
+    grid-template-columns: 1fr 100px 100px;
+  }
+
+  .authButton {
+    padding: .5rem;
+    margin: .25rem;
+  }
 }
