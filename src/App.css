@@ -6,6 +6,37 @@
   padding: 0 1rem;
 }
 
+.warningDialog {
+  font-size: 1.5rem;
+  z-index: 1;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  background-color: var(--medium-yellow);
+  padding: 1rem;
+  border-radius: var(--medium-radius);
+  border: 3px solid var(--dark-blue);
+  min-width: 250px;
+}
+
+.warningDialog>* {
+  margin-bottom: 1rem;
+}
+
+.warningDialog button {
+  font-weight: bold;
+  border: none;
+  padding: 1rem;
+  border-radius: var(--small-radius);
+  color: unset;
+  background-color: var(--dark-yellow);
+}
+
+.warningDialog button:hover {
+  background-color: #ebcc50;
+}
+
 header {
   background-color: var(--light-blue);
   height: var(--header-height);
