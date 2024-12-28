@@ -6,6 +6,7 @@ import Cart from './features/Cart/Cart';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
+import Dialog from './shared/Dialog';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
@@ -18,6 +19,8 @@ function App() {
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState('');
   const [cartError, setCartError] = useState('');
+  const [cartItemError, setCartItemError] = useState('');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const [isRegistering, setIsRegistering] = useState(false);
 
@@ -131,8 +134,7 @@ function App() {
     }
   }
 
-  function handleAddItemToCart(id) {
-    //TODO: if logged in, post item to /cart to upsert cartItem
+  async function handleAddItemToCart(id) {
     const inventoryItem = inventory.find((item) => item.id === id);
     if (!inventoryItem) {
       return;
@@ -151,7 +153,57 @@ function App() {
         productId: inventoryItem.id,
       };
     }
+
+    //removes the cart item and then inserts a newer version
     setCart([...cart.filter((item) => item.productId !== id), updatedCartItem]);
+    //exit out of function to prevent anon fetches
+    if (!user.id) {
+      return;
+    }
+    //API expects only these fields
+    const payload = {
+      userId: updatedCartItem.userId,
+      productId: updatedCartItem.productId,
+      quantity: updatedCartItem.quantity,
+    };
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    try {
+      const resp = await fetch(`${baseUrl}/cart`, options);
+      if (!resp.ok) {
+        if (resp.status === 401) {
+          setCartItemError(
+            'Your item could not be saved. Log out and log back in again to continue'
+          );
+        } else {
+          setCartItemError('Cart failed to save');
+        }
+        setIsDialogOpen(true);
+        if (updatedCartItem.quantity === 1) {
+          setCart([...cart.filter((item) => item.productId !== id)]);
+        } else {
+          const revertedCartItem = {
+            ...updatedCartItem,
+            quantity: updatedCartItem.quantity - 1,
+          };
+          if (revertedCartItem) {
+            setCart([
+              ...cart.filter((item) => item.productId !== id),
+              revertedCartItem,
+            ]);
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+      //TODO code to de-increment item count here
+    }
   }
 
   function handleCloseCart() {
@@ -176,8 +228,16 @@ function App() {
     setIsAuthDialogOpen(true);
   }
 
+  function handleCloseDialog() {
+    setIsDialogOpen(false);
+    setCartError('');
+  }
+
   return (
     <>
+      {isDialogOpen && (
+        <Dialog message={cartItemError} handleCloseDialog={handleCloseDialog} />
+      )}
       <Header
         cart={cart}
         handleOpenCart={() => setIsCartOpen(true)}
