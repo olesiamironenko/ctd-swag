@@ -8,6 +8,20 @@ import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
 
+function alphaSortProducts(productItems) {
+  return productItems.toSorted((a, b) => {
+    const baseNameA = a.baseName.toLowerCase();
+    const baseNameB = b.baseName.toLowerCase();
+    if (baseNameA > baseNameB) {
+      return 1;
+    }
+    if (baseNameA < baseNameB) {
+      return -1;
+    }
+    return 0;
+  });
+}
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
   const [inventory, setInventory] = useState([]);
@@ -21,7 +35,6 @@ function App() {
   const [cartError, setCartError] = useState('');
   const [cartItemError, setCartItemError] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const [isRegistering, setIsRegistering] = useState(false);
 
   useEffect(() => {
@@ -32,6 +45,8 @@ function App() {
           throw new Error(resp.status);
         }
         const products = await resp.json();
+        const sortedProducts = alphaSortProducts(products);
+        console.log(products);
         setInventory([...products]);
       } catch (error) {
         console.error(error);
