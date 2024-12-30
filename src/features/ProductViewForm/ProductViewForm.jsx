@@ -3,6 +3,8 @@ function ProductViewForm({
   setIsSortAscending,
   sortBy,
   isSortAscending,
+  searchTerm,
+  setSearchTerm,
 }) {
   const handleSortDirectionChange = (e) => {
     const sortDirection = e.target.value;
@@ -13,9 +15,14 @@ function ProductViewForm({
     }
   };
 
+  function handleClearTerm(event) {
+    event.preventDefault();
+    setSearchTerm('');
+  }
+
   return (
     <form className="viewForm">
-      <div className="filterOption">
+      <div className="sortOption">
         <label htmlFor="sortBy">Sort by: </label>
         <select
           name="sortBy"
@@ -27,7 +34,7 @@ function ProductViewForm({
           <option value="price">Price</option>
         </select>
       </div>
-      <div className="filterOption">
+      <div className="sortOption">
         <label htmlFor="sortDirection">Direction: </label>
         <select
           name="sortDirection"
@@ -38,6 +45,18 @@ function ProductViewForm({
           <option value={true}>Ascending</option>
           <option value={false}>Descending</option>
         </select>
+      </div>
+      <div className="filterQuery">
+        <label htmlFor="searchTerm">Filter by:</label>
+        <input
+          type="text"
+          name="searchTerm"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button className="clearSearchTerm" onClick={handleClearTerm}>
+          clear
+        </button>
       </div>
     </form>
   );

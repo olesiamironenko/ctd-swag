@@ -7,7 +7,7 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
-import ProductSortForm from './features/ProductSortForm/ProductSortForm';
+import ProductViewForm from './features/ProductViewForm/ProductViewForm';
 
 function sortByBaseName({ productItems, isSortAscending }) {
   return productItems.toSorted((a, b) => {
@@ -41,9 +41,26 @@ function sortByPrice({ productItems, isSortAscending }) {
   });
 }
 
+function filterByQuery({ productItems, searchTerm }) {
+  const term = searchTerm.toLowerCase();
+  if (term === '') {
+    return productItems;
+  }
+  return productItems.filter((item) => {
+    if (item.baseName.toLowerCase().includes(term)) {
+      return item;
+    } else if (item.baseDescription.toLowerCase().includes(term)) {
+      return item;
+    } else if (item.variantDescription.toLowerCase().includes(term)) {
+      return item;
+    }
+  });
+}
+
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
   const [inventory, setInventory] = useState([]);
+  const [filteredInventory, setFilteredInventory] = useState([]);
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCartSyncing, setIsCartSyncing] = useState(false);
@@ -57,6 +74,7 @@ function App() {
   const [isRegistering, setIsRegistering] = useState(false);
   const [isSortAscending, setIsSortAscending] = useState(true);
   const [sortBy, setSortBy] = useState('baseName');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -71,6 +89,7 @@ function App() {
           isSortAscending: true,
         });
         setInventory([...sortedProducts]);
+        setFilteredInventory([...sortedProducts]);
       } catch (error) {
         console.error(error);
       }
@@ -79,15 +98,21 @@ function App() {
 
   useEffect(() => {
     if (sortBy === 'baseName') {
-      setInventory((previous) =>
+      setFilteredInventory((previous) =>
         sortByBaseName({ productItems: previous, isSortAscending })
       );
     } else {
-      setInventory((previous) =>
+      setFilteredInventory((previous) =>
         sortByPrice({ productItems: previous, isSortAscending })
       );
     }
   }, [isSortAscending, sortBy]);
+
+  useEffect(() => {
+    setFilteredInventory(
+      filterByQuery({ productItems: inventory, searchTerm })
+    );
+  }, [searchTerm, inventory]);
 
   async function handleSyncCart(workingCart) {
     if (!user.id) {
@@ -307,14 +332,16 @@ function App() {
             resetAuthError={() => setAuthError('')}
           />
         )}
-        <ProductSortForm
+        <ProductViewForm
           setSortBy={setSortBy}
           setIsSortAscending={setIsSortAscending}
           setBy={sortBy}
           isSortAscending={isSortAscending}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
         <ProductList
-          inventory={inventory}
+          inventory={filteredInventory}
           handleAddItemToCart={handleAddItemToCart}
         ></ProductList>
         {isCartOpen && (
