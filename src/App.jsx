@@ -7,7 +7,7 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
-import ProductSortForm from './features/ProductList/ProductSortForm';
+import ProductSortForm from './features/ProductSortForm/ProductSortForm';
 
 function sortByBaseName({ productItems, isSortAscending }) {
   return productItems.toSorted((a, b) => {
