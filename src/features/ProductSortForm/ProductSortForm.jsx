@@ -4,10 +4,6 @@ function ProductSortForm({
   sortBy,
   isSortAscending,
 }) {
-  const handleSortByChange = (e) => {
-    setSortBy(e.target.value);
-  };
-
   const handleSortDirectionChange = (e) => {
     const sortDirection = e.target.value;
     if (sortDirection === 'false') {
@@ -25,7 +21,7 @@ function ProductSortForm({
           name="sortBy"
           id="sortBy"
           value={sortBy}
-          onChange={handleSortByChange}
+          onChange={(e) => setSortBy(e.target.value)}
         >
           <option value="baseName">Product Name</option>
           <option value="price">Price</option>
