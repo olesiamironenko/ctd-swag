@@ -1,4 +1,4 @@
-function ProductSortForm({
+function ProductViewForm({
   setSortBy,
   setIsSortAscending,
   sortBy,
@@ -14,7 +14,7 @@ function ProductSortForm({
   };
 
   return (
-    <form className="filterForm">
+    <form className="viewForm">
       <div className="filterOption">
         <label htmlFor="sortBy">Sort by: </label>
         <select
@@ -43,4 +43,4 @@ function ProductSortForm({
   );
 }
 
-export default ProductSortForm;
+export default ProductViewForm;
