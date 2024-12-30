@@ -7,18 +7,37 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
+import ProductSortForm from './features/ProductList/ProductSortForm';
 
-function alphaSortProducts(productItems) {
+function sortByBaseName({ productItems, isSortAscending }) {
   return productItems.toSorted((a, b) => {
     const baseNameA = a.baseName.toLowerCase();
     const baseNameB = b.baseName.toLowerCase();
     if (baseNameA > baseNameB) {
-      return 1;
+      if (isSortAscending) {
+        return 1;
+      } else {
+        return -1;
+      }
     }
     if (baseNameA < baseNameB) {
-      return -1;
+      if (isSortAscending) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
     return 0;
+  });
+}
+
+function sortByPrice({ productItems, isSortAscending }) {
+  return productItems.toSorted((a, b) => {
+    if (isSortAscending) {
+      return a.price - b.price;
+    } else {
+      return b.price - a.price;
+    }
   });
 }
 
@@ -36,6 +55,8 @@ function App() {
   const [cartItemError, setCartItemError] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
+  const [isSortAscending, setIsSortAscending] = useState(true);
+  const [sortBy, setSortBy] = useState('baseName');
 
   useEffect(() => {
     (async () => {
@@ -45,14 +66,29 @@ function App() {
           throw new Error(resp.status);
         }
         const products = await resp.json();
-        const sortedProducts = alphaSortProducts(products);
-        console.log(products);
-        setInventory([...products]);
+        const sortedProducts = sortByBaseName({
+          productItems: products,
+          isSortAscending: true,
+        });
+        setInventory([...sortedProducts]);
       } catch (error) {
         console.error(error);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    if (sortBy === 'baseName') {
+      setInventory((previous) =>
+        sortByBaseName({ productItems: previous, isSortAscending })
+      );
+    } else {
+      setInventory((previous) =>
+        sortByPrice({ productItems: previous, isSortAscending })
+      );
+    }
+  }, [isSortAscending, sortBy]);
+
   async function handleSyncCart(workingCart) {
     if (!user.id) {
       setCart(workingCart);
@@ -217,7 +253,6 @@ function App() {
       }
     } catch (error) {
       console.log(error.message);
-      //TODO code to de-increment item count here
     }
   }
 
@@ -272,6 +307,12 @@ function App() {
             resetAuthError={() => setAuthError('')}
           />
         )}
+        <ProductSortForm
+          setSortBy={setSortBy}
+          setIsSortAscending={setIsSortAscending}
+          setBy={sortBy}
+          isSortAscending={isSortAscending}
+        />
         <ProductList
           inventory={inventory}
           handleAddItemToCart={handleAddItemToCart}
