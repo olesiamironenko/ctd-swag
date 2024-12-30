@@ -12,6 +12,7 @@ function ProductCard({ product, handleAddItemToCart }) {
       <div className="productCopy">
         <h2>{product.baseName}</h2>
         <p>{product.baseDescription}</p>
+        <p>${product.price.toFixed(2) || '0.00'}</p>
       </div>
       <div className="productButtons">
         {product.variants.length > 1 ? (

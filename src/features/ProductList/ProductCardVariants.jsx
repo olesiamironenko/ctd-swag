@@ -10,7 +10,7 @@ function ProductCardVariants({ variants, closeVariants, handleAddItemToCart }) {
                   src={`/public/product-images/${variant.image}`}
                   alt={variant.variantDescription}
                 />
-                <p>${variant.price}</p>
+                <p>${variant.price.toFixed(2) || '0.00'}</p>
               </div>
               <div className="variantDetails">
                 <h3>{variant.variantName}</h3>
