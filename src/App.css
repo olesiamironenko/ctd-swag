@@ -180,6 +180,7 @@ main {
   display: flex;
 }
 
+.sortOption,
 .filterOption {
   padding-right: 1rem;
   display: flex;
