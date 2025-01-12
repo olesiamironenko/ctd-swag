@@ -1,14 +1,15 @@
 import placeholder from '../../assets/placeholder.png';
+import styles from './CartItem.module.css';
 
 function CartItem({ item, onHandleItemUpdate }) {
   return (
-    <li className="cartListItem">
+    <li className={styles.cartItem}>
       <img src={placeholder} alt="" />
-      <div className="cartListItemDetails">
+      <div>
         <h2>{item.baseName}</h2>
         {item.variantName !== 'Default' ? <p>{item.variantName}</p> : null}
       </div>
-      <div className="cartListItemSubtotal">
+      <div className={styles.subtotal}>
         <label>
           Count:{' '}
           <input

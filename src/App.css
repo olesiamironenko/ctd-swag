@@ -367,32 +367,6 @@ button:disabled {
 
 }
 
-.cartListItem {
-  font-size: 1rem;
-  color: var(--dark-blue);
-  border-radius: var(--small-radius);
-  background-color: #fff;
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-  align-items: center;
-  margin-bottom: .25rem;
-  padding-left: .75rem;
-}
-
-.cartListItem h2 {
-  padding: 8px;
-}
-
-.cartListItem img {
-  max-height: 72px;
-}
-
-.cartListItemSubtotal {
-  border-left: 1px solid var(--dark-blue);
-  padding: .25rem;
-  text-align: right;
-}
 
 .cartListWrapper {
   position: absolute;
