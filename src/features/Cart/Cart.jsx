@@ -13,7 +13,6 @@ function Cart({
 
   //resets `workingCart`
   useEffect(() => {
-    console.log('firing! ', Date.now());
     if (isFormDirty || isCartSyncing) {
       return;
     }
