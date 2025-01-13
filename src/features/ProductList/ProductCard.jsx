@@ -8,7 +8,7 @@ function ProductCard({ product, handleAddItemToCart }) {
   return (
     <Card>
       <Preview>
-        <img src={placeholder} alt=" " />
+        <img src={placeholder} alt="product preview placeholder" />
       </Preview>
       <Copy>
         <h2>{product.baseName}</h2>
