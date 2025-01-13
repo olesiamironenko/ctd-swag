@@ -199,17 +199,6 @@ main {
   justify-content: center;
 }
 
-.productCard {
-  position: relative;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 200px;
-  border-radius: var(--medium-radius);
-  justify-content: space-between;
-}
-
 .productVariantsWrapper {
   position: absolute;
   z-index: 1;
@@ -277,44 +266,8 @@ main {
   padding: .25rem;
 }
 
-
 button:disabled {
   pointer-events: none;
-}
-
-.productButtons {
-  width: 100%;
-  height: 4rem;
-  display: flex;
-}
-
-.productButtons button {
-  border: none;
-  background-color: rgb(from var(--medium-blue) r g b /.5);
-  width: 100%;
-}
-
-
-.productButtons button:hover {
-  background-color: rgb(from var(--medium-blue) r g b /.25);
-}
-
-.productButtons button:active {
-  background-color: rgb(from var(--light-blue) r g b /.25);
-}
-
-.productPreview {
-  border-radius: var(--medium-radius) var(--medium-radius) 0 0;
-  overflow: hidden;
-  border: 4px solid var(--dark-blue);
-}
-
-.productCopy {
-  padding: .25rem;
-}
-
-.productCopy p {
-  padding: .5rem;
 }
 
 .shoppingCart {
