@@ -202,7 +202,6 @@ function App() {
         token: userData.token,
       });
       setAuthError('');
-      setIsAuthenticating(false);
       setIsAuthDialogOpen(false);
     } catch (error) {
       setIsAuthenticating(false);
