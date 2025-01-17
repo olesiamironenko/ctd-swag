@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import './App.css';
 import './assets/css-reset.css';
 import AuthDialog from './features/Auth/AuthDialog';
@@ -8,6 +8,11 @@ import Header from './layout/Header';
 import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
 import ProductViewForm from './features/ProductViewForm/ProductViewForm';
+import {
+  initialState as cartInitialState,
+  cartActions,
+  cartReducer,
+} from './reducers/App/cart.reducer';
 
 function sortByBaseName({ productItems, isSortAscending }) {
   return productItems.toSorted((a, b) => {
@@ -61,20 +66,18 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCartSyncing, setIsCartSyncing] = useState(false);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [user, setUser] = useState({});
   const [authError, setAuthError] = useState('');
-  const [cartError, setCartError] = useState('');
-  const [cartItemError, setCartItemError] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [isSortAscending, setIsSortAscending] = useState(true);
   const [sortBy, setSortBy] = useState('baseName');
   const [searchTerm, setSearchTerm] = useState('');
+
+  //reducers
+  const [cartState, dispatch] = useReducer(cartReducer, cartInitialState);
 
   useEffect(() => {
     (async () => {
@@ -114,44 +117,43 @@ function App() {
     );
   }, [searchTerm, inventory]);
 
-  async function handleSyncCart(workingCart) {
-    if (!user.id) {
-      setCart(workingCart);
-      return;
-    }
-    setIsCartSyncing(true);
-    const options = {
-      method: 'PATCH',
-      body: JSON.stringify({ cartItems: workingCart }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    try {
-      const resp = await fetch(`${baseUrl}/cart`, options);
-      if (!resp.ok) {
-        console.log('resp not okay');
-        if (resp.status === 401) {
-          throw new Error('Not authorized. Please log in.');
+  const handleSyncCart = useCallback(
+    async (workingCart) => {
+      if (!user.id) {
+        dispatch({ type: cartActions.updateCart, cart: workingCart });
+        return;
+      }
+      dispatch({ type: cartActions.sync });
+      const options = {
+        method: 'PATCH',
+        body: JSON.stringify({ cartItems: workingCart }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      try {
+        const resp = await fetch(`${baseUrl}/cart`, options);
+        if (!resp.ok) {
+          console.log('resp not okay');
+          if (resp.status === 401) {
+            throw new Error('Not authorized. Please log in.');
+          }
         }
         const cartData = await resp.json();
         if (cartData.error) {
           throw new Error(cartData.error);
         }
-        throw new Error('Error occurred while syncing');
+        dispatch({ type: cartActions.updateCart, cart: cartData });
+      } catch (error) {
+        console.error(error);
+        dispatch({ type: cartActions.error, error: error.message });
+      } finally {
+        dispatch({ type: cartActions.notSyncing });
       }
-      const cartData = await resp.json();
-      setCart([...cartData]);
-
-      //clean up state variables
-      setIsCartSyncing(false);
-      setCartError('');
-    } catch (error) {
-      setCartError(error.message);
-      setIsCartSyncing(false);
-    }
-  }
+    },
+    [user.id, user.token, dispatch]
+  );
 
   async function handleAuthenticate(credentials) {
     const options = {
@@ -170,7 +172,10 @@ function App() {
       }
       const userData = await resp.json();
       setUser({ ...userData.user, token: userData.token });
-      setCart([...userData.cartItems]);
+      dispatch({
+        type: cartActions.updateCart,
+        cart: userData.cartItems,
+      });
       setAuthError('');
       setIsAuthenticating(false);
       setIsAuthDialogOpen(false);
@@ -202,92 +207,30 @@ function App() {
         token: userData.token,
       });
       setAuthError('');
-      setIsAuthDialogOpen(false);
     } catch (error) {
-      setIsAuthenticating(false);
       console.log(error.message);
+    } finally {
+      setIsAuthenticating(false);
     }
   }
 
+  //START
   async function handleAddItemToCart(id) {
-    const inventoryItem = inventory.find((item) => item.id === id);
-    if (!inventoryItem) {
-      return;
-    }
-    const itemToUpdate = cart.find((item) => item.productId === id);
-    let updatedCartItem;
-    if (itemToUpdate) {
-      updatedCartItem = {
-        ...itemToUpdate,
-        quantity: itemToUpdate.quantity + 1,
-      };
-    } else {
-      updatedCartItem = {
-        ...inventoryItem,
-        quantity: 1,
-        productId: inventoryItem.id,
-      };
-    }
-
-    //removes the cart item and then inserts a newer version
-    setCart([...cart.filter((item) => item.productId !== id), updatedCartItem]);
     //exit out of function to prevent anon fetches
+    dispatch({ type: cartActions.addItem, id, inventory });
     if (!user.id) {
       return;
-    }
-    //API expects only these fields
-    const payload = {
-      userId: updatedCartItem.userId,
-      productId: updatedCartItem.productId,
-      quantity: updatedCartItem.quantity,
-    };
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    try {
-      const resp = await fetch(`${baseUrl}/cart`, options);
-      if (!resp.ok) {
-        if (resp.status === 401) {
-          setCartItemError(
-            'Your item could not be saved. Log out and log back in again to continue'
-          );
-        } else {
-          setCartItemError('Cart failed to save');
-        }
-        setIsDialogOpen(true);
-        if (updatedCartItem.quantity === 1) {
-          setCart([...cart.filter((item) => item.productId !== id)]);
-        } else {
-          const revertedCartItem = {
-            ...updatedCartItem,
-            quantity: updatedCartItem.quantity - 1,
-          };
-          if (revertedCartItem) {
-            setCart([
-              ...cart.filter((item) => item.productId !== id),
-              revertedCartItem,
-            ]);
-          }
-        }
-      }
-    } catch (error) {
-      console.log(error.message);
     }
   }
 
   function handleCloseCart() {
-    setIsCartOpen(false);
+    dispatch({ type: cartActions.close });
     setAuthError('');
   }
 
   function handleLogOut() {
+    dispatch({ type: cartActions.reset });
     setUser({});
-    setCart([]);
   }
 
   function handleOpenAuthDialog(option) {
@@ -304,17 +247,20 @@ function App() {
 
   function handleCloseDialog() {
     setIsDialogOpen(false);
-    setCartError('');
+    dispatch({ type: cartActions.dismissError });
   }
 
   return (
     <>
       {isDialogOpen && (
-        <Dialog message={cartItemError} handleCloseDialog={handleCloseDialog} />
+        <Dialog
+          message={cartState.error}
+          handleCloseDialog={handleCloseDialog}
+        />
       )}
       <Header
-        cart={cart}
-        handleOpenCart={() => setIsCartOpen(true)}
+        cart={cartState.cart}
+        handleOpenCart={() => dispatch({ type: cartActions.open })}
         handleOpenAuthDialog={handleOpenAuthDialog}
         handleLogOut={handleLogOut}
         user={user}
@@ -343,11 +289,11 @@ function App() {
           inventory={filteredInventory}
           handleAddItemToCart={handleAddItemToCart}
         ></ProductList>
-        {isCartOpen && (
+        {cartState.isCartOpen && (
           <Cart
-            cartError={cartError}
-            isCartSyncing={isCartSyncing}
-            cart={cart}
+            cartError={cartState.error}
+            isCartSyncing={cartState.isCartSyncing}
+            cart={cartState.cart}
             handleSyncCart={handleSyncCart}
             handleCloseCart={handleCloseCart}
           />
