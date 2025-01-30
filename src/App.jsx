@@ -13,54 +13,9 @@ import {
   cartActions,
   cartReducer,
 } from './reducers/App/cart.reducer';
-
-function sortByBaseName({ productItems, isSortAscending }) {
-  return productItems.toSorted((a, b) => {
-    const baseNameA = a.baseName.toLowerCase();
-    const baseNameB = b.baseName.toLowerCase();
-    if (baseNameA > baseNameB) {
-      if (isSortAscending) {
-        return 1;
-      } else {
-        return -1;
-      }
-    }
-    if (baseNameA < baseNameB) {
-      if (isSortAscending) {
-        return -1;
-      } else {
-        return 1;
-      }
-    }
-    return 0;
-  });
-}
-
-function sortByPrice({ productItems, isSortAscending }) {
-  return productItems.toSorted((a, b) => {
-    if (isSortAscending) {
-      return a.price - b.price;
-    } else {
-      return b.price - a.price;
-    }
-  });
-}
-
-function filterByQuery({ productItems, searchTerm }) {
-  const term = searchTerm.toLowerCase();
-  if (term === '') {
-    return productItems;
-  }
-  return productItems.filter((item) => {
-    if (item.baseName.toLowerCase().includes(term)) {
-      return item;
-    } else if (item.baseDescription.toLowerCase().includes(term)) {
-      return item;
-    } else if (item.variantDescription.toLowerCase().includes(term)) {
-      return item;
-    }
-  });
-}
+import { sortByBaseName } from './utils/sortByBaseName';
+import { sortByPrice } from './utils/sortByPrice';
+import { filterByQuery } from './utils/filterByQuery';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
@@ -289,16 +244,16 @@ function App() {
           inventory={filteredInventory}
           handleAddItemToCart={handleAddItemToCart}
         ></ProductList>
-        {cartState.isCartOpen && (
-          <Cart
-            cartError={cartState.error}
-            isCartSyncing={cartState.isCartSyncing}
-            cart={cartState.cart}
-            handleSyncCart={handleSyncCart}
-            handleCloseCart={handleCloseCart}
-          />
-        )}
       </main>
+      {cartState.isCartOpen && (
+        <Cart
+          cartError={cartState.error}
+          isCartSyncing={cartState.isCartSyncing}
+          cart={cartState.cart}
+          handleSyncCart={handleSyncCart}
+          handleCloseCart={handleCloseCart}
+        />
+      )}
       <Footer />
     </>
   );
