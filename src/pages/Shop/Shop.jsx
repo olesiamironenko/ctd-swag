@@ -1,5 +1,5 @@
-import ProductViewForm from '../ProductViewForm/ProductViewForm';
-import ProductList from '../ProductList/ProductList';
+import ProductViewForm from '../../features/ProductViewForm/ProductViewForm';
+import ProductList from '../../features/ProductList/ProductList';
 
 function Shop({
   filteredInventory,

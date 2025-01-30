@@ -6,7 +6,7 @@ import Cart from './features/Cart/Cart';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
 import Dialog from './shared/Dialog';
-import Shop from './features/Shop/Shop';
+import Shop from './pages/Shop/Shop';
 import {
   initialState as cartInitialState,
   cartActions,
