@@ -38,11 +38,6 @@ function cartReducer(state, action) {
         ...state,
         isCartSyncing: false,
       };
-    case cartActions.syncComplete:
-      return {
-        ...state,
-        isCartSyncing: false,
-      };
     case cartActions.updateCart: {
       return {
         ...state,
