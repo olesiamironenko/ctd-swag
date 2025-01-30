@@ -5,9 +5,8 @@ import AuthDialog from './features/Auth/AuthDialog';
 import Cart from './features/Cart/Cart';
 import Footer from './layout/Footer';
 import Header from './layout/Header';
-import ProductList from './features/ProductList/ProductList';
 import Dialog from './shared/Dialog';
-import ProductViewForm from './features/ProductViewForm/ProductViewForm';
+import Shop from './features/Shop/Shop';
 import {
   initialState as cartInitialState,
   cartActions,
@@ -230,18 +229,16 @@ function App() {
         />
       )}
       <main>
-        <ProductViewForm
+        <Shop
+          filteredInventory={filteredInventory}
+          handleAddItemToCart={handleAddItemToCart}
           setSortBy={setSortBy}
           setIsSortAscending={setIsSortAscending}
-          setBy={sortBy}
+          sortBy={sortBy}
           isSortAscending={isSortAscending}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
-        <ProductList
-          inventory={filteredInventory}
-          handleAddItemToCart={handleAddItemToCart}
-        ></ProductList>
       </main>
       {cartState.isCartOpen && (
         <Cart
