@@ -50,6 +50,7 @@ function ProductViewForm({
         <label htmlFor="searchTerm">Filter by:</label>
         <input
           type="text"
+          id="searchTerm"
           name="searchTerm"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

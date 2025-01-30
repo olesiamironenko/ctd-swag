@@ -218,18 +218,18 @@ function App() {
         handleLogOut={handleLogOut}
         user={user}
       />
+      {isAuthDialogOpen && (
+        <AuthDialog
+          handleCloseAuthDialog={() => setIsAuthDialogOpen(false)}
+          handleAuthenticate={handleAuthenticate}
+          handleRegister={handleRegister}
+          authError={authError}
+          isAuthenticating={isAuthenticating}
+          isRegistering={isRegistering}
+          resetAuthError={() => setAuthError('')}
+        />
+      )}
       <main>
-        {isAuthDialogOpen && (
-          <AuthDialog
-            handleCloseAuthDialog={() => setIsAuthDialogOpen(false)}
-            handleAuthenticate={handleAuthenticate}
-            handleRegister={handleRegister}
-            authError={authError}
-            isAuthenticating={isAuthenticating}
-            isRegistering={isRegistering}
-            resetAuthError={() => setAuthError('')}
-          />
-        )}
         <ProductViewForm
           setSortBy={setSortBy}
           setIsSortAscending={setIsSortAscending}

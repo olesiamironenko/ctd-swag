@@ -92,7 +92,7 @@ main {
   position: absolute;
   background-color: var(--light-blue);
   z-index: 1;
-  top: 1rem;
+  top: 6rem;
   padding: 1rem;
   border-radius: var(--medium-radius);
   border: 3px solid var(--dark-blue);
