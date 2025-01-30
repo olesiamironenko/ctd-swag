@@ -31,7 +31,6 @@ function App() {
   const [sortBy, setSortBy] = useState('baseName');
   const [searchTerm, setSearchTerm] = useState('');
 
-  //reducers
   const [cartState, dispatch] = useReducer(cartReducer, cartInitialState);
 
   useEffect(() => {
@@ -169,7 +168,6 @@ function App() {
     }
   }
 
-  //START
   async function handleAddItemToCart(id) {
     //exit out of function to prevent anon fetches
     dispatch({ type: cartActions.addItem, id, inventory });
