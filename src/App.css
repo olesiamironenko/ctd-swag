@@ -4,6 +4,7 @@
   text-align: center;
   background-color: #e7f6f4;
   padding: 0 1rem;
+  position: relative;
 }
 
 .warningDialog {
@@ -323,8 +324,9 @@ button:disabled {
 
 .cartListWrapper {
   position: absolute;
-  top: calc(var(--header-height) / -1 + 8px);
-  right: -8px;
+  /* top: calc(var(--header-height) / -1 + 8px); */
+  top: 1rem;
+  right: 1rem;
   padding: 1rem;
   background-color: var(--dark-blue);
   color: var(--light-blue);
@@ -344,11 +346,11 @@ button:disabled {
 .cartScreen,
 .authFormScreen {
   backdrop-filter: blur(4px);
-  border-radius: var(--medium-radius);
+  border-radius: 0;
   content: "";
   background-color: rgb(from var(--light-blue) r g b /.25);
   position: absolute;
-  top: 4px;
+  top: 0px;
   bottom: 4px;
   left: -10px;
   right: -10px;
