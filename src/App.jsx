@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
+import { Routes, Route, Navigate } from 'react-router';
 import './App.css';
 import './assets/css-reset.css';
 import AuthDialog from './features/Auth/AuthDialog';
@@ -7,6 +8,9 @@ import Footer from './layout/Footer';
 import Header from './layout/Header';
 import Dialog from './shared/Dialog';
 import Shop from './pages/Shop/Shop';
+import Account from './pages/Account/Account';
+import Checkout from './pages/Checkout/Checkout';
+import Product from './pages/Checkout/Checkout';
 import {
   initialState as cartInitialState,
   cartActions,
@@ -229,16 +233,35 @@ function App() {
         />
       )}
       <main>
-        <Shop
-          filteredInventory={filteredInventory}
-          handleAddItemToCart={handleAddItemToCart}
-          setSortBy={setSortBy}
-          setIsSortAscending={setIsSortAscending}
-          sortBy={sortBy}
-          isSortAscending={isSortAscending}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Shop
+                filteredInventory={filteredInventory}
+                handleAddItemToCart={handleAddItemToCart}
+                setSortBy={setSortBy}
+                setIsSortAscending={setIsSortAscending}
+                sortBy={sortBy}
+                isSortAscending={isSortAscending}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+              />
+            }
+          />
+          <Route
+            path="/checkout"
+            element={<Checkout cart={cartState.cart} />}
+          />
+          <Route path="/product" element={<Product />}></Route>
+          {user.id && (
+            <Route
+              path="/account"
+              element={<Account user={user} handleLogOut={handleLogOut} />}
+            />
+          )}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </main>
       {cartState.isCartOpen && (
         <Cart
