@@ -42,7 +42,7 @@ header {
   background-color: var(--light-blue);
   height: var(--header-height);
   display: grid;
-  grid-template-columns: 1fr 225px 100px;
+  grid-template-columns: 2fr 250px 100px;
   align-items: center;
   padding-top: 1rem;
   position: sticky;
@@ -51,6 +51,8 @@ header {
 }
 
 .siteBranding {
+  text-decoration: none;
+  color: var(--dark-blue);
   position: relative;
   display: flex;
   flex-direction: row;
@@ -61,6 +63,15 @@ header {
 .siteBranding img {
   width: 100px;
   margin-right: 1rem;
+}
+
+.userActions span {
+  margin-right: .5rem;
+}
+
+.userActions a {
+  text-decoration: none;
+  color: var(--dark-blue);
 }
 
 h1 {
@@ -118,7 +129,10 @@ main {
 }
 
 .authSubmitButtons button,
-.authButton {
+.authButton,
+.linkButton,
+.buttonGroup button {
+  text-decoration: none;
   font-weight: bold;
   border: none;
   padding: 1rem;
@@ -128,16 +142,20 @@ main {
 }
 
 .authSubmitButtons button:hover,
-.authButton:hover {
+.authButton:hover,
+.linkButton:hover,
+.buttonGroup button:hover {
   background-color: rgb(from var(--medium-blue) r g b /.25);
 }
 
 .authSubmitButtons button:active,
-.authButton:active {
+.authButton:active,
+.buttonGroup button:active {
   background-color: rgb(from var(--light-blue) r g b /.25);
 }
 
-.authSubmitButtons button:disabled {
+.authSubmitButtons button:disabled,
+.buttonGroup button:disabled {
   background-color: rgb(from var(--medium-gray) r g b /.5);
   color: rgb(from var(--dark-blue) r g b /.5);
 }
@@ -357,6 +375,36 @@ button:disabled {
   z-index: 1;
 }
 
+.account {
+  width: 350px;
+  margin: auto
+}
+
+.accountDetails {
+  max-width: 300px;
+  margin: auto;
+  padding-top: 1rem;
+}
+
+.accountDetails p {
+  padding-bottom: 1rem;
+}
+
+.inputGroup {
+  padding-bottom: .25rem;
+}
+
+.buttonGroup {
+  padding-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttonGroup button,
+.buttonGroup .linkButton {
+  width: 150px;
+}
 
 footer {
   position: sticky;
