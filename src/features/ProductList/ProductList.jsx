@@ -7,7 +7,7 @@ function ProductList({ products, handleAddItemToCart }) {
         return (
           <ProductCard
             product={product}
-            key={product.baseName}
+            key={product.id}
             handleAddItemToCart={handleAddItemToCart}
           />
         );
