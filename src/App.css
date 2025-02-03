@@ -48,6 +48,7 @@ header {
   position: sticky;
   top: 0;
   will-change: transform;
+  z-index: 1;
 }
 
 .siteBranding {
