@@ -1,4 +1,4 @@
-function ProductViewForm({
+function ProductListFilter({
   setSortBy,
   setIsSortAscending,
   sortBy,
@@ -63,4 +63,4 @@ function ProductViewForm({
   );
 }
 
-export default ProductViewForm;
+export default ProductListFilter;
