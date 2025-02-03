@@ -10,7 +10,7 @@ import Dialog from './shared/Dialog';
 import Shop from './pages/Shop/Shop';
 import Account from './pages/Account/Account';
 import Checkout from './pages/Checkout/Checkout';
-import Product from './pages/Checkout/Checkout';
+import ProductDetail from './pages/Product/ProductDetails';
 import {
   initialState as cartInitialState,
   cartActions,
@@ -34,7 +34,10 @@ function App() {
   const [sortBy, setSortBy] = useState('baseName');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [cartState, dispatch] = useReducer(cartReducer, cartInitialState);
+  const [cartState, dispatchCartAction] = useReducer(
+    cartReducer,
+    cartInitialState
+  );
 
   useEffect(() => {
     (async () => {
@@ -77,10 +80,10 @@ function App() {
   const handleSyncCart = useCallback(
     async (workingCart) => {
       if (!user.id) {
-        dispatch({ type: cartActions.updateCart, cart: workingCart });
+        dispatchCartAction({ type: cartActions.updateCart, cart: workingCart });
         return;
       }
-      dispatch({ type: cartActions.sync });
+      dispatchCartAction({ type: cartActions.sync });
       const options = {
         method: 'PATCH',
         body: JSON.stringify({ cartItems: workingCart }),
@@ -101,15 +104,15 @@ function App() {
         if (cartData.error) {
           throw new Error(cartData.error);
         }
-        dispatch({ type: cartActions.updateCart, cart: cartData });
+        dispatchCartAction({ type: cartActions.updateCart, cart: cartData });
       } catch (error) {
         console.error(error);
-        dispatch({ type: cartActions.error, error: error.message });
+        dispatchCartAction({ type: cartActions.error, error: error.message });
       } finally {
-        dispatch({ type: cartActions.notSyncing });
+        dispatchCartAction({ type: cartActions.notSyncing });
       }
     },
-    [user.id, user.token, dispatch]
+    [user.id, user.token, dispatchCartAction]
   );
 
   async function handleAuthenticate(credentials) {
@@ -129,7 +132,7 @@ function App() {
       }
       const userData = await resp.json();
       setUser({ ...userData.user, token: userData.token });
-      dispatch({
+      dispatchCartAction({
         type: cartActions.updateCart,
         cart: userData.cartItems,
       });
@@ -172,20 +175,17 @@ function App() {
   }
 
   async function handleAddItemToCart(id) {
-    //exit out of function to prevent anon fetches
-    dispatch({ type: cartActions.addItem, id, inventory });
-    if (!user.id) {
-      return;
-    }
+    console.log(id);
+    dispatchCartAction({ type: cartActions.addItem, id, inventory });
   }
 
   function handleCloseCart() {
-    dispatch({ type: cartActions.close });
+    dispatchCartAction({ type: cartActions.close });
     setAuthError('');
   }
 
   function handleLogOut() {
-    dispatch({ type: cartActions.reset });
+    dispatchCartAction({ type: cartActions.reset });
     setUser({});
   }
 
@@ -203,7 +203,7 @@ function App() {
 
   function handleCloseDialog() {
     setIsDialogOpen(false);
-    dispatch({ type: cartActions.dismissError });
+    dispatchCartAction({ type: cartActions.dismissError });
   }
 
   return (
@@ -216,7 +216,7 @@ function App() {
       )}
       <Header
         cart={cartState.cart}
-        handleOpenCart={() => dispatch({ type: cartActions.open })}
+        handleOpenCart={() => dispatchCartAction({ type: cartActions.open })}
         handleOpenAuthDialog={handleOpenAuthDialog}
         handleLogOut={handleLogOut}
         user={user}
@@ -253,13 +253,16 @@ function App() {
             path="/checkout"
             element={<Checkout cart={cartState.cart} />}
           />
-          <Route path="/product" element={<Product />}></Route>
           {user.id && (
             <Route
               path="/account"
               element={<Account user={user} handleLogOut={handleLogOut} />}
             />
           )}
+          <Route
+            path="/products/:id"
+            element={<ProductDetail inventory={inventory} />}
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
