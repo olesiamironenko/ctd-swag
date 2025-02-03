@@ -19,11 +19,13 @@ import {
 import { sortByBaseName } from './utils/sortByBaseName';
 import { sortByPrice } from './utils/sortByPrice';
 import { filterByQuery } from './utils/filterByQuery';
+import { convertInventoryToProducts } from './utils/convertInventoryToProducts';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
+  //keeping original for filtering logic
   const [inventory, setInventory] = useState([]);
-  const [filteredInventory, setFilteredInventory] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [user, setUser] = useState({});
@@ -46,13 +48,13 @@ function App() {
         if (!resp.ok) {
           throw new Error(resp.status);
         }
-        const products = await resp.json();
-        const sortedProducts = sortByBaseName({
-          productItems: products,
+        const inventory = await resp.json();
+        const sortedInventory = sortByBaseName({
+          productItems: inventory,
           isSortAscending: true,
         });
-        setInventory([...sortedProducts]);
-        setFilteredInventory([...sortedProducts]);
+        setInventory([...sortedInventory]);
+        setFilteredProducts(convertInventoryToProducts(sortedInventory));
       } catch (error) {
         console.error(error);
       }
@@ -61,24 +63,27 @@ function App() {
 
   useEffect(() => {
     if (sortBy === 'baseName') {
-      setFilteredInventory((previous) =>
+      setFilteredProducts((previous) =>
         sortByBaseName({ productItems: previous, isSortAscending })
       );
     } else {
-      setFilteredInventory((previous) =>
+      setFilteredProducts((previous) =>
         sortByPrice({ productItems: previous, isSortAscending })
       );
     }
   }, [isSortAscending, sortBy]);
 
   useEffect(() => {
-    setFilteredInventory(
-      filterByQuery({ productItems: inventory, searchTerm })
-    );
+    const filteredInventory = filterByQuery({
+      productItems: inventory,
+      searchTerm,
+    });
+    setFilteredProducts(convertInventoryToProducts(filteredInventory));
   }, [searchTerm, inventory]);
 
   const handleSyncCart = useCallback(
     async (workingCart) => {
+      console.log('handle sync cart');
       if (!user.id) {
         dispatchCartAction({ type: cartActions.updateCart, cart: workingCart });
         return;
@@ -238,7 +243,7 @@ function App() {
             path="/"
             element={
               <Shop
-                filteredInventory={filteredInventory}
+                filteredProducts={filteredProducts}
                 handleAddItemToCart={handleAddItemToCart}
                 setSortBy={setSortBy}
                 setIsSortAscending={setIsSortAscending}
