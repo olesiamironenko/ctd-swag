@@ -2,7 +2,7 @@ import ProductViewForm from '../../features/ProductViewForm/ProductViewForm';
 import ProductList from '../../features/ProductList/ProductList';
 
 function Shop({
-  filteredInventory,
+  filteredProducts,
   handleAddItemToCart,
   setSortBy,
   setIsSortAscending,
@@ -22,7 +22,7 @@ function Shop({
         setSearchTerm={setSearchTerm}
       />
       <ProductList
-        inventory={filteredInventory}
+        products={filteredProducts}
         handleAddItemToCart={handleAddItemToCart}
       />
     </>
