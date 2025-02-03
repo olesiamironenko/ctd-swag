@@ -16,14 +16,19 @@ function ProductCard({ product, handleAddItemToCart }) {
         <Details>${product.price.toFixed(2) || '0.00'}</Details>
       </Copy>
       <ButtonWrapper>
-        {product.variants.length > 1 ? (
+        {product.variants?.length > 1 ? (
           <button onClick={() => setAreVariantsShown(true)}>
             Show Options
           </button>
         ) : (
-          <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
-            Add to Cart
-          </button>
+          <>
+            <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
+              Details
+            </button>
+            <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
+              Quick Add
+            </button>
+          </>
         )}
       </ButtonWrapper>
       {areVariantsShown && (
