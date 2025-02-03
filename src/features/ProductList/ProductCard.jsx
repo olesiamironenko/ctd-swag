@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import styled from 'styled-components';
 import placeholder from '../../assets/placeholder.png';
 import ProductCardVariants from './ProductCardVariants';
@@ -22,9 +23,12 @@ function ProductCard({ product, handleAddItemToCart }) {
           </button>
         ) : (
           <>
-            <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
+            <Link
+              className="linkButton"
+              to={`/products/${product.variants[0].id}`}
+            >
               Details
-            </button>
+            </Link>
             <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
               Quick Add
             </button>
@@ -70,7 +74,8 @@ const ButtonWrapper = styled.div`
   width: 100%;
   height: 4rem;
   display: flex;
-  button {
+  button,
+  .linkButton {
     border: none;
     background-color: rgb(from var(--medium-blue) r g b / 0.5);
     width: 100%;
@@ -80,6 +85,12 @@ const ButtonWrapper = styled.div`
     &:active {
       background-color: rgb(from var(--light-blue) r g b / 0.25);
     }
+  }
+  .linkButton {
+    border-radius: 0;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
   }
 `;
 
