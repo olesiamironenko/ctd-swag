@@ -1,5 +1,6 @@
+import { v4 as uuid } from 'uuid';
+
 export function convertInventoryToProducts(inventory) {
-  console.log(inventory);
   const workingProducts = [];
   inventory.forEach((item) => {
     if (!item.inStock) {
@@ -15,6 +16,7 @@ export function convertInventoryToProducts(inventory) {
         price: item.price,
         baseDescription: item.baseDescription,
         variants: [{ ...item }],
+        id: uuid(),
       });
     } else {
       const index = workingProducts.findIndex(
