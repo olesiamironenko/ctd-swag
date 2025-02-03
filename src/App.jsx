@@ -176,8 +176,6 @@ function App() {
   }
 
   async function handleAddItemToCart(id) {
-    /** probably expand this to include the fetch */
-    console.log(id);
     dispatchCartAction({ type: cartActions.addItem, id, inventory });
   }
 
@@ -263,7 +261,12 @@ function App() {
           )}
           <Route
             path="/products/:id"
-            element={<ProductDetail inventory={inventory} />}
+            element={
+              <ProductDetail
+                products={filteredProducts}
+                handleAddItemToCart={handleAddItemToCart}
+              />
+            }
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
