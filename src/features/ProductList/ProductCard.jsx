@@ -18,15 +18,14 @@ function ProductCard({ product, handleAddItemToCart }) {
       </Copy>
       <ButtonWrapper>
         {product.variants?.length > 1 ? (
-          <button onClick={() => setAreVariantsShown(true)}>
-            Show Options
-          </button>
+          <>
+            <Link to={`/products/${product.id}`} className="linkButton">
+              {product.variants.length} Options Available
+            </Link>
+          </>
         ) : (
           <>
-            <Link
-              className="linkButton"
-              to={`/products/${product.variants[0].id}`}
-            >
+            <Link className="linkButton" to={`/products/${product.id}`}>
               Details
             </Link>
             <button onClick={() => handleAddItemToCart(product.variants[0].id)}>
