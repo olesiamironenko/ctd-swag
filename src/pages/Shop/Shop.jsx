@@ -1,4 +1,4 @@
-import ProductViewForm from '../../features/ProductViewForm/ProductViewForm';
+import ProductListFilter from '../../features/ProductListFilter/ProductListFilter';
 import ProductList from '../../features/ProductList/ProductList';
 
 function Shop({
@@ -13,7 +13,7 @@ function Shop({
 }) {
   return (
     <>
-      <ProductViewForm
+      <ProductListFilter
         setSortBy={setSortBy}
         setIsSortAscending={setIsSortAscending}
         sortBy={sortBy}
