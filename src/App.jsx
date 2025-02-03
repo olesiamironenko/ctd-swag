@@ -81,43 +81,39 @@ function App() {
     setFilteredProducts(convertInventoryToProducts(filteredInventory));
   }, [searchTerm, inventory]);
 
-  const handleSyncCart = useCallback(
-    async (workingCart) => {
-      console.log('handle sync cart');
-      if (!user.id) {
-        dispatchCartAction({ type: cartActions.updateCart, cart: workingCart });
-        return;
-      }
-      dispatchCartAction({ type: cartActions.sync });
+  useEffect(() => {
+    //exits if not logged on
+    if (!user.token) {
+      return;
+    }
+    async function syncCartWithServer(workingCart, userToken) {
       const options = {
         method: 'PATCH',
         body: JSON.stringify({ cartItems: workingCart }),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${userToken}`,
         },
       };
-      try {
-        const resp = await fetch(`${baseUrl}/cart`, options);
-        if (!resp.ok) {
-          console.log('resp not okay');
-          if (resp.status === 401) {
-            throw new Error('Not authorized. Please log in.');
-          }
+      const resp = await fetch(`${baseUrl}/cart`, options);
+      if (!resp.ok) {
+        if (resp.status === 401) {
+          throw new Error('Not authorized. Please log in.');
         }
-        const cartData = await resp.json();
-        if (cartData.error) {
-          throw new Error(cartData.error);
-        }
-        dispatchCartAction({ type: cartActions.updateCart, cart: cartData });
-      } catch (error) {
-        console.error(error);
-        dispatchCartAction({ type: cartActions.error, error: error.message });
-      } finally {
-        dispatchCartAction({ type: cartActions.notSyncing });
       }
+      const cartData = await resp.json();
+      if (cartData.error) {
+        throw new Error(cartData.error);
+      }
+    }
+    syncCartWithServer(cartState.cart, user.token);
+  }, [cartState.cart, user.token]);
+
+  const handleUpdateCart = useCallback(
+    (workingCart) => {
+      dispatchCartAction({ type: cartActions.updateCart, cart: workingCart });
     },
-    [user.id, user.token, dispatchCartAction]
+    [dispatchCartAction]
   );
 
   async function handleAuthenticate(credentials) {
@@ -180,6 +176,7 @@ function App() {
   }
 
   async function handleAddItemToCart(id) {
+    /** probably expand this to include the fetch */
     console.log(id);
     dispatchCartAction({ type: cartActions.addItem, id, inventory });
   }
@@ -276,7 +273,7 @@ function App() {
           cartError={cartState.error}
           isCartSyncing={cartState.isCartSyncing}
           cart={cartState.cart}
-          handleSyncCart={handleSyncCart}
+          handleUpdateCart={handleUpdateCart}
           handleCloseCart={handleCloseCart}
         />
       )}
