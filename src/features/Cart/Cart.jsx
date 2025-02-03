@@ -5,7 +5,7 @@ import CartItem from './CartItem';
 function Cart({
   cart,
   handleCloseCart,
-  handleSyncCart,
+  handleUpdateCart,
   cartError,
   isCartSyncing,
 }) {
@@ -74,7 +74,7 @@ function Cart({
 
   function handleConfirm(e) {
     e.preventDefault();
-    handleSyncCart([...removeEmptyItems(workingCart)]);
+    handleUpdateCart([...removeEmptyItems(workingCart)]);
     setIsFormDirty(false);
   }
 
