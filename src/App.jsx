@@ -20,6 +20,7 @@ import { sortByBaseName } from './utils/sortByBaseName';
 import { sortByPrice } from './utils/sortByPrice';
 import { filterByQuery } from './utils/filterByQuery';
 import { convertInventoryToProducts } from './utils/convertInventoryToProducts';
+import NotFound from './pages/404/404';
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
 function App() {
@@ -268,7 +269,7 @@ function App() {
               />
             }
           />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       {cartState.isCartOpen && (
