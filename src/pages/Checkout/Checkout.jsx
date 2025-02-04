@@ -16,10 +16,12 @@ function Checkout({ cart }) {
         })}
       </div>
       <h2>Total: {getTotal()}</h2>
+      {cart.length < 1 ? <p>cart is empty</p> : null}
       <div className="buttonGroup">
         <Link className="linkButton" to="/">
           Go Back
         </Link>
+        {/* permanently disabled since this is just a demo*/}
         <button disabled>Checkout</button>
       </div>
     </>
