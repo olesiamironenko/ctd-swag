@@ -2,26 +2,37 @@ import React from 'react';
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
 import './App.css';
 
+// Component1 uses a function declaration
 function Component1() {
   return <p>Component1 uses a function declaration</p>;
 }
 
 //or
-
+// Component2 uses a function expression
 const Component2 = function () {
   return <p>Component2 uses a function expression</p>;
 };
 
 //or
-
+// Component3 uses an arrow function
 const Component3 = () => {
   return <p>Component3 uses an arrow function</p>;
 };
 
 //or
-
+// Component4 uses an arrow function with implicit return
 const Component4 = () => (
-  <p>Component4 uses an arrow function with implicit return</p>
+  <>
+    <p>We have merch!!!</p>
+    <ul>
+      <li>tee shirt</li>
+      <li>bucket hat</li>
+      {/*valid JSX*/}
+      <img src="../public/product-images/bucket-hat-peach.png" width={100} />
+      <br />
+      <input val="" />
+    </ul>
+  </>
 );
 
 function App() {
