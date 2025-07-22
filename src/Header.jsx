@@ -1,4 +1,4 @@
-import ctdLogo from './assets/mono-blue-logo.svg';
+import ctdLogo from './assets/icons/mono-blue-logo.svg';
 
 function Header() {
   return (

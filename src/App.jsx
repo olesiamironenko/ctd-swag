@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
-import ctdLogo from './assets/icons/mono-blue-logo.svg';
-import './App.css';
+import Header from './Header.jsx';
+
 import inventoryData from './assets/inventory.json';
+import './App.css';
 
 function App() {
   const [inventory, setInventory] = useState(inventoryData.inventory);
   return (
     <main>
-      <div className="coming-soon">
-        <h1>CTD Swag</h1>
-        <div>
-          <img
-            src={ctdLogo}
-            alt="Code The Dream Logo"
-            style={{ height: 100, width: 100 }}
-          />
-        </div>
-      </div>
+      <Header />
       <ProductList inventory={inventory} />
     </main>
   );
