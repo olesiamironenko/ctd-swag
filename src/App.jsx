@@ -1,32 +1,64 @@
+import React from 'react';
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
-import inventoryData from './assets/inventory.json';
 import './App.css';
-import { useState } from 'react';
+
+// Component1 uses a function declaration
+function Component1() {
+  return <p>Component1 uses a function declaration</p>;
+}
+
+//or
+// Component2 uses a function expression
+const Component2 = function () {
+  return <p>Component2 uses a function expression</p>;
+};
+
+//or
+// Component3 uses an arrow function
+const Component3 = () => {
+  return <p>Component3 uses an arrow function</p>;
+};
+
+//or
+// Component4 uses an arrow function with implicit return
+const Component4 = () => (
+  <>
+    <p>We have merch!!!</p>
+    <ul>
+      <li>tee shirt</li>
+      <li>bucket hat</li>
+      {/*valid JSX*/}
+      <img src="../public/product-images/bucket-hat-peach.png" width={100} />
+      <br />
+      <input val="" />
+    </ul>
+  </>
+);
 
 function App() {
-  const [inventory, setInventory] = useState(inventoryData.inventory);
+  return React.createElement(
+    'div',
+    {
+      className: 'coming-soon',
+    },
+    React.createElement('h1', null, 'CTD Swag'),
+    React.createElement(
+      'div',
+      {
+        className: 'siteBranding',
+      },
+      React.createElement('img', {
+        src: ctdLogo,
+        alt: 'Code The Dream Logo',
+      })
+    ),
+    // Inserted components
+    React.createElement(Component1), // using function declaration
+    React.createElement(Component2), // using function expression
+    React.createElement(Component3), // arrow function
+    React.createElement(Component4), // arrow function with implicit return
 
-  return (
-    <main>
-      <div className="coming-soon">
-        <h1>CTD Swag</h1>
-        <div style={{ height: 100, width: 100 }}>
-          <img src={ctdLogo} alt="Code The Dream Logo" />
-        </div>
-      </div>
-      <ul>
-        {inventory.map((item) => {
-          return (
-            <li key={item.id}>
-              <div className="itemCard">
-                <h2>{item.baseName}</h2>
-                <p>{item.baseDescription}</p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-    </main>
+    React.createElement('h2', null, 'Coming Soon...')
   );
 }
 
