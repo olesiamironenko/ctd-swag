@@ -35,7 +35,12 @@ const Component4 = () => (
   </>
 );
 
-const message = 'Coming Soon...'; //This is outside the function definition for App
+let message = 'Coming Soon...'; //This is outside the function definition for App
+
+setTimeout(() => {
+  message = 'We can feel it...';
+  console.log(`Updated message: ${message}`);
+}, 3000);
 
 function App() {
   const title = ' CTD Swag'; // This is inside the Component before the return
