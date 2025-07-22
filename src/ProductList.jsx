@@ -10,8 +10,8 @@ function ProductList({ inventory = [] }) {
         return (
           <ProductCard
             key={item.id}
-            name={item.baseName}
-            description={item.baseDescription}
+            baseName={item.baseName}
+            baseDescription={item.baseDescription}
           />
         );
       })}
