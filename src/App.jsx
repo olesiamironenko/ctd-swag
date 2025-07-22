@@ -3,9 +3,10 @@ import ctdLogo from './assets/icons/mono-blue-logo.svg';
 import './App.css';
 import inventoryData from './assets/inventory.json';
 
-//without destructuring
-function ProductList(props) {
-  const inventory = props.inventory;
+//with destructuring
+function ProductList({ inventory = [] }) {
+  //destructuring assignment grabs `inventory` out of props
+  //we're also setting a default value og `inventory` to an empty array
   return (
     <ul>
       {inventory.map((item) => {
