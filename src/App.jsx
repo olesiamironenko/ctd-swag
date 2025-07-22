@@ -35,13 +35,17 @@ const Component4 = () => (
   </>
 );
 
+const message = 'Coming Soon...'; //This is outside the function definition for App
+
 function App() {
+  const title = ' CTD Swag'; // This is inside the Component before the return
+
   return React.createElement(
     'div',
     {
       className: 'coming-soon',
     },
-    React.createElement('h1', null, 'CTD Swag'),
+    React.createElement('h1', null, title),
     React.createElement(
       'div',
       {
@@ -58,7 +62,7 @@ function App() {
     React.createElement(Component3), // arrow function
     React.createElement(Component4), // arrow function with implicit return
 
-    React.createElement('h2', null, 'Coming Soon...')
+    React.createElement('h2', null, message)
   );
 }
 
