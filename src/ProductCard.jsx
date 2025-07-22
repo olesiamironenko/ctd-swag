@@ -11,4 +11,4 @@ function ProductCard({ baseName, baseDescription }) {
   );
 }
 
-export default ItemCard;
+export default ProductCard;
