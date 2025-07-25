@@ -48,7 +48,7 @@ function App() {
 
   return (
     <main>
-      <Header />
+      <Header cart={cart} />
       <ProductList
         inventory={inventory}
         handleAddItemToCart={handleAddItemToCart}
