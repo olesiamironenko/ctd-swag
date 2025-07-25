@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header.jsx';
 import inventoryData from './assets/inventory.json';
 import ProductList from './ProductList';
@@ -6,7 +6,10 @@ import ProductCard from './ProductCard';
 import './App.css';
 
 function App() {
-  const [inventory, setInventory] = useState(inventoryData.inventory);
+  const [inventory, setInventory] = useState([]);
+  useEffect(() => {
+    setInventory([...inventoryData.inventory]);
+  }, []);
 
   function promoteItem() {
     return (
