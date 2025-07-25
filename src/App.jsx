@@ -11,6 +11,32 @@ function App() {
     setInventory([...inventoryData.inventory]);
   }, []);
 
+  const [cart, setCart] = useState([]);
+  function addItemToCart(item) {
+    setCart([...cart, item]);
+  }
+
+  function handleAddItemToCart(id) {
+    const target = inventory.find((item) => item.id === id);
+    //if no inventory items are found
+    //we want to prevent the app from crashing
+    //by exiting this function now
+    if (!target) {
+      console.error('cart error: item not found');
+      return;
+    }
+    //create an new object, spread the contents of the item selected
+    //and add a `cartItemId`
+    const cartItem = { ...target, cartItemId: Date.now() };
+    console.log(cartItem);
+    setCart([...cart, cartItem]);
+  }
+
+  function removeItemFromCart(id) {
+    const updatedCart = cart.filter((item) => item.id !== id);
+    setCart([...updatedCart]);
+  }
+
   function promoteItem() {
     return (
       <ProductCard
@@ -23,7 +49,10 @@ function App() {
   return (
     <main>
       <Header />
-      <ProductList inventory={inventory}>{promoteItem()}</ProductList>
+      <ProductList
+        inventory={inventory}
+        handleAddItemToCart={handleAddItemToCart}
+      ></ProductList>
     </main>
   );
 }
