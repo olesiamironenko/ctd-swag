@@ -8,9 +8,10 @@ function Header({ cart }) {
       console.log(item.baseName, item.cartItemId);
     });
     if (cart.length > 0) {
+      console.log(cart.length);
       console.log('--end of cart--');
     }
-  });
+  }, [cart]);
 
   return (
     <div className="coming-soon">
@@ -25,7 +26,7 @@ function Header({ cart }) {
       <div className="shoppingCart">
         <button type="button">
           <img src={shoppingCart} alt="" />
-          {/* <p className="cartCount">{cartCount}</p> */}
+          <p>{cart.length}</p>
         </button>
       </div>
     </div>
