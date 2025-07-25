@@ -12,6 +12,7 @@ function ProductList({ inventory = [], children, handleAddItemToCart }) {
         return (
           <ProductCard
             key={item.id}
+            id={item.id}
             baseName={item.baseName}
             baseDescription={item.baseDescription}
             handleAddItemToCart={handleAddItemToCart}

@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import shoppingCart from './assets/icons/shoppingCart.svg';
 
 function Header({ cart }) {
-  // useEffect(() => {
-  //   cart.forEach((item) => {
-  //     console.log(item.baseName, item.cartItemId);
-  //   });
-  //   if (cart.length > 0) {
-  //     console.log('--end of cart--');
-  //   }
-  // });
+  useEffect(() => {
+    cart.forEach((item) => {
+      console.log(item.baseName, item.cartItemId);
+    });
+    if (cart.length > 0) {
+      console.log('--end of cart--');
+    }
+  });
 
   return (
     <div className="coming-soon">

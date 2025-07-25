@@ -1,12 +1,10 @@
-function ProductCard({ baseName, baseDescription }) {
+function ProductCard({ baseName, baseDescription, id, handleAddItemToCart }) {
   return (
     <li>
       <div className="itemCard">
         <h2>{baseName}</h2>
         <p>{baseDescription}</p>
-        <button onClick={() => handleAddItemToCart(cartItemId)}>
-          Add to Cart
-        </button>
+        <button onClick={() => handleAddItemToCart(id)}>Add to Cart</button>
       </div>
     </li>
   );
