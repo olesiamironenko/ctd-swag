@@ -7,6 +7,7 @@ function ProductList({ inventory = [], children, handleAddItemToCart }) {
 
   useEffect(() => {
     const workingProducts = [];
+
     inventory.forEach((item) => {
       if (!item.inStock) {
         return;
@@ -38,13 +39,11 @@ function ProductList({ inventory = [], children, handleAddItemToCart }) {
     <ul>
       {children}{' '}
       {/* this location guarantees that this list item will be first */}
-      {inventory.map((item) => {
+      {products.map((product) => {
         return (
           <ProductCard
-            key={item.id}
-            id={item.id}
-            baseName={item.baseName}
-            baseDescription={item.baseDescription}
+            key={product.variants[0].id}
+            product={product}
             handleAddItemToCart={handleAddItemToCart}
           />
         );

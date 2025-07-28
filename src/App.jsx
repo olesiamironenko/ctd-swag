@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Header.jsx';
-import inventoryData from './assets/inventory.json';
-import ProductList from './ProductList';
-import ProductCard from './ProductCard';
 import './App.css';
+import inventoryData from './assets/inventory.json';
+import Header from './Header.jsx';
+import ProductList from './ProductList';
 
 function App() {
   const [inventory, setInventory] = useState([]);
+  const [cart, setCart] = useState([]);
+
   useEffect(() => {
     setInventory([...inventoryData.inventory]);
   }, []);
-
-  const [cart, setCart] = useState([]);
-  function addItemToCart(item) {
-    setCart([...cart, item]);
-  }
 
   function handleAddItemToCart(id) {
     const target = inventory.find((item) => item.id === id);
@@ -37,22 +33,13 @@ function App() {
     setCart([...updatedCart]);
   }
 
-  function promoteItem() {
-    return (
-      <ProductCard
-        baseName="Limited Edition Tee!"
-        baseDescription="Special limited edition neon green shirt with a metallic Code the Dream Logo shinier than the latest front-end framework! Signed by the legendary Frank!"
-      />
-    );
-  }
-
   return (
     <main>
       <Header cart={cart} />
       <ProductList
         inventory={inventory}
         handleAddItemToCart={handleAddItemToCart}
-      ></ProductList>
+      />
     </main>
   );
 }
