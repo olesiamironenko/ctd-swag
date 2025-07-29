@@ -1,35 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import Header from './Header.jsx';
-import inventoryData from './assets/inventory.json';
-import ProductList from './ProductList';
-import ProductCard from './ProductCard';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import inventoryData from './assets/inventory.json';
+import Header from './Header.jsx';
+import ProductList from './ProductList';
+import Cart from './Cart';
 
 function App() {
   const [inventory, setInventory] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const year = useRef(
+    (() => {
+      const now = new Date(Date.now());
+      return now.getFullYear();
+    })()
+  );
+
   useEffect(() => {
     setInventory([...inventoryData.inventory]);
   }, []);
 
-  const [cart, setCart] = useState([]);
-  function addItemToCart(item) {
-    setCart([...cart, item]);
-  }
-
   function handleAddItemToCart(id) {
-    const target = inventory.find((item) => item.id === id);
+    const inventoryItem = inventory.find((item) => item.id === id);
     //if no inventory items are found
     //we want to prevent the app from crashing
     //by exiting this function now
-    if (!target) {
+    if (!inventoryItem) {
       console.error('cart error: item not found');
       return;
     }
     //create an new object, spread the contents of the item selected
     //and add a `cartItemId`
-    const cartItem = { ...target, cartItemId: Date.now() };
-    console.log(cartItem);
-    setCart([...cart, cartItem]);
+    const itemToUpdate = cart.find((item) => item.id === id);
+    let updatedCartItem;
+    if (itemToUpdate) {
+      updatedCartItem = {
+        ...itemToUpdate,
+        itemCount: itemToUpdate.itemCount + 1,
+      };
+    } else {
+      updatedCartItem = { ...inventoryItem, itemCount: 1 };
+    }
+    setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
   }
 
   function removeItemFromCart(id) {
@@ -37,23 +49,44 @@ function App() {
     setCart([...updatedCart]);
   }
 
-  function promoteItem() {
-    return (
-      <ProductCard
-        baseName="Limited Edition Tee!"
-        baseDescription="Special limited edition neon green shirt with a metallic Code the Dream Logo shinier than the latest front-end framework! Signed by the legendary Frank!"
-      />
-    );
+  function handleCloseCart() {
+    //prevents re-render if unchanged
+    if (isCartOpen) {
+      setIsCartOpen(false);
+    }
+  }
+
+  function handleOpenCart() {
+    //prevents re-render if unchanged
+    if (!isCartOpen) {
+      setIsCartOpen(true);
+    }
   }
 
   return (
-    <main>
-      <Header cart={cart} />
-      <ProductList
-        inventory={inventory}
-        handleAddItemToCart={handleAddItemToCart}
-      ></ProductList>
-    </main>
+    <>
+      <main>
+        <Header cart={cart} handleOpenCart={handleOpenCart} />
+        <ProductList
+          inventory={inventory}
+          handleAddItemToCart={handleAddItemToCart}
+        />
+        {/*`isCartOpen has to be true for the cart to be rendered*/}
+        {isCartOpen && (
+          <Cart
+            cart={cart}
+            setCart={setCart} // only change
+            handleCloseCart={handleCloseCart}
+          />
+        )}
+      </main>
+      <footer>
+        <p>
+          Made with ❤️ | &copy; {year.current}{' '}
+          <a href="https://codethedream.org/">CTD </a>
+        </p>
+      </footer>
+    </>
   );
 }
 
