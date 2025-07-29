@@ -19,8 +19,46 @@ function Cart({ cart, handleCloseCart }) {
       .toFixed(2);
   }
 
-  function handleUpdateField() {}
-  function handleCancel() {}
+  function handleUpdateField({ event, id }) {
+    event.preventDefault();
+    // prevent re-render if already dirty
+    if (!isFormDirty) {
+      setIsFormDirty(true);
+    }
+    const targetProduct = cart.find((item) => item.id === id);
+    const targetIndex = cart.findIndex((item) => item.id === id);
+    if (!targetProduct) {
+      console.error('cart error: item not found');
+      return;
+    }
+    //reject negative values or if user deletes value
+    if (event.target.value < 0 || event.target.value === '') {
+      return;
+    }
+    // create new object instead of updating old
+    const updatedProduct = {
+      ...targetProduct,
+      itemCount: parseInt(event.target.value, 10),
+    };
+    //avoid re-ordering array when updating cart item
+    setWorkingCart([
+      ...workingCart.slice(0, targetIndex),
+      updatedProduct,
+      ...workingCart.slice(targetIndex + 1),
+    ]);
+  }
+
+  function handleCancel(e) {
+    e.preventDefault();
+    setIsFormDirty(false);
+    setWorkingCart([...cart]); // reset child to parent values
+  }
+
+  function handleConfirm(e) {
+    e.preventDefault();
+    setIsFormDirty(false);
+    setCart([...workingCart]); // Push changes from child to parent
+  }
 
   return (
     <>
@@ -57,6 +95,12 @@ function Cart({ cart, handleCloseCart }) {
               );
             })}
           </ul>
+        )}
+        {isFormDirty && (
+          <div>
+            <button onClick={handleConfirm}>Confirm Update</button>
+            <button onClick={handleCancel}>Cancel Update</button>
+          </div>
         )}
         {/* cart total will need to be calculated */}
         <h2>Cart Total: ${getWorkingCartPrice() || 0}</h2>
