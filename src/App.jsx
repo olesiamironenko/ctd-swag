@@ -21,19 +21,27 @@ function App() {
   }, []);
 
   function handleAddItemToCart(id) {
-    const target = inventory.find((item) => item.id === id);
+    const inventoryItem = inventory.find((item) => item.id === id);
     //if no inventory items are found
     //we want to prevent the app from crashing
     //by exiting this function now
-    if (!target) {
+    if (!inventoryItem) {
       console.error('cart error: item not found');
       return;
     }
     //create an new object, spread the contents of the item selected
     //and add a `cartItemId`
-    const cartItem = { ...target, cartItemId: Date.now() };
-    console.log(cartItem);
-    setCart([...cart, cartItem]);
+    const itemToUpdate = cart.find((item) => item.id === id);
+    let updatedCartItem;
+    if (itemToUpdate) {
+      updatedCartItem = {
+        ...itemToUpdate,
+        itemCount: itemToUpdate.itemCount + 1,
+      };
+    } else {
+      updatedCartItem = { ...inventoryItem, itemCount: 1 };
+    }
+    setCart([...cart.filter((item) => item.id !== id), updatedCartItem]);
   }
 
   function removeItemFromCart(id) {

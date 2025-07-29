@@ -6,7 +6,9 @@ function Cart({ cart, handleCloseCart }) {
     // using `.toFixed` because floating point arithmetic
     // introduces suprising rounding issues
     // eg: `console.log(.99 + .99 +.99)` will print 2.9699999999999998
-    return cart.reduce((acc, item) => acc + item.price, 0).toFixed(2);
+    return cart
+      .reduce((acc, item) => acc + item.price * item.itemCount, 0)
+      .toFixed(2);
   }
 
   return (
@@ -24,7 +26,8 @@ function Cart({ cart, handleCloseCart }) {
                   <img src={placeholder} alt="" />
                   <h2>{item.baseName}</h2>
                   <div className="cartListItemSubtotal">
-                    <p>${item.price}</p>
+                    <p>Count: {item.itemCount}</p>
+                    <p>Subtotal: ${(item.price * item.itemCount).toFixed(2)}</p>
                   </div>
                 </li>
               );
