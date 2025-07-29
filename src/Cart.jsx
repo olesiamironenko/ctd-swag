@@ -2,6 +2,13 @@ import placeholder from './assets/placeholder.png';
 
 // `handleCloseCart` is not made yet but we know we will need it
 function Cart({ cart, handleCloseCart }) {
+  function getCartPrice() {
+    // using `.toFixed` because floating point arithmetic
+    // introduces suprising rounding issues
+    // eg: `console.log(.99 + .99 +.99)` will print 2.9699999999999998
+    return cart.reduce((acc, item) => acc + item.price, 0).toFixed(2);
+  }
+
   return (
     <>
       <div className="cartScreen"></div>
@@ -25,7 +32,7 @@ function Cart({ cart, handleCloseCart }) {
           </ul>
         )}
         {/* cart total will need to be calculated */}
-        <h2>Cart Total: $0.00</h2>
+        <h2>Cart Total: ${getCartPrice()}</h2>
         <button onClick={handleCloseCart}>CloseCart</button>
       </div>
     </>
