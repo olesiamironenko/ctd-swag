@@ -1,35 +1,24 @@
 import ctdLogo from './assets/icons/mono-blue-logo.svg';
-import { useEffect } from 'react';
 import shoppingCart from './assets/icons/shoppingCart.svg';
 
-function Header({ cart }) {
-  useEffect(() => {
-    cart.forEach((item) => {
-      console.log(item.baseName, item.cartItemId);
-    });
-    if (cart.length > 0) {
-      console.log(cart.length);
-      console.log('--end of cart--');
-    }
-  }, [cart]);
-
+function Header({ cart, handleOpenCart }) {
   return (
-    <div className="coming-soon">
-      <h1>CTD Swag</h1>
-      <div>
+    <header>
+      <div className="siteBranding">
         <img
           src={ctdLogo}
           alt="Code The Dream Logo"
           style={{ height: 100, width: 100 }}
         />
+        <h1>CTD Swag</h1>
       </div>
       <div className="shoppingCart">
-        <button type="button">
+        <button type="button" onClick={handleOpenCart}>
           <img src={shoppingCart} alt="" />
-          <p>{cart.length}</p>
+          <p className="cartCount">{cart.length}</p>
         </button>
       </div>
-    </div>
+    </header>
   );
 }
 

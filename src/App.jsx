@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import inventoryData from './assets/inventory.json';
 import Header from './Header.jsx';
 import ProductList from './ProductList';
+import Cart from './Cart';
 
 function App() {
   const [inventory, setInventory] = useState([]);
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const year = useRef(
+    (() => {
+      const now = new Date(Date.now());
+      return now.getFullYear();
+    })()
+  );
 
   useEffect(() => {
     setInventory([...inventoryData.inventory]);
@@ -33,14 +41,38 @@ function App() {
     setCart([...updatedCart]);
   }
 
+  function handleCloseCart() {
+    //prevents re-render if unchanged
+    if (isCartOpen) {
+      setIsCartOpen(false);
+    }
+  }
+
+  function handleOpenCart() {
+    //prevents re-render if unchanged
+    if (!isCartOpen) {
+      setIsCartOpen(true);
+    }
+  }
+
   return (
-    <main>
-      <Header cart={cart} />
-      <ProductList
-        inventory={inventory}
-        handleAddItemToCart={handleAddItemToCart}
-      />
-    </main>
+    <>
+      <main>
+        <Header cart={cart} handleOpenCart={handleOpenCart} />
+        <ProductList
+          inventory={inventory}
+          handleAddItemToCart={handleAddItemToCart}
+        />
+        {/*`isCartOpen has to be true for the cart to be rendered*/}
+        {isCartOpen && <Cart cart={cart} handleCloseCart={handleCloseCart} />}
+      </main>
+      <footer>
+        <p>
+          Made with ❤️ | &copy; {year.current}{' '}
+          <a href="https://codethedream.org/">CTD </a>
+        </p>
+      </footer>
+    </>
   );
 }
 
