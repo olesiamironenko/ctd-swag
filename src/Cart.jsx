@@ -1,33 +1,57 @@
+import { useState, useEffect } from 'react';
 import placeholder from './assets/placeholder.png';
 
 // `handleCloseCart` is not made yet but we know we will need it
 function Cart({ cart, handleCloseCart }) {
-  function getCartPrice() {
+  const [workingCart, setWorkingCart] = useState(cart);
+  const [isFormDirty, setIsFormDirty] = useState(false);
+
+  useEffect(() => {
+    setWorkingCart(cart);
+  }, [cart]);
+
+  function getWorkingCartPrice() {
     // using `.toFixed` because floating point arithmetic
     // introduces suprising rounding issues
     // eg: `console.log(.99 + .99 +.99)` will print 2.9699999999999998
-    return cart
+    return workingCart
       .reduce((acc, item) => acc + item.price * item.itemCount, 0)
       .toFixed(2);
   }
 
+  function handleUpdateField() {}
+  function handleCancel() {}
+
   return (
     <>
       <div className="cartScreen"></div>
-      {/* .cartScreen covers the product list with a div that has a blur effect placed on it. this makes the product buttons unclickable */}
       <div className="cartListWrapper">
-        {cart.length === 0 ? (
+        {workingCart.length === 0 ? (
           <p>cart is empty</p>
         ) : (
           <ul className="cartList">
-            {cart.map((item) => {
+            {workingCart.map((item) => {
               return (
-                <li className="cartListItem" key={item.cartItemId}>
+                <li className="cartListItem" key={item.id}>
                   <img src={placeholder} alt="" />
                   <h2>{item.baseName}</h2>
+                  {item.variantName !== 'Default' ? (
+                    <p>{item.variantName}</p>
+                  ) : null}
                   <div className="cartListItemSubtotal">
-                    <p>Count: {item.itemCount}</p>
-                    <p>Subtotal: ${(item.price * item.itemCount).toFixed(2)}</p>
+                    <label>
+                      Count:
+                      <input
+                        type="number"
+                        value={item.itemCount}
+                        onChange={(event) =>
+                          handleUpdateField({ event, id: item.id })
+                        }
+                      />
+                    </label>
+                    <p>
+                      Subtotal: ${(item.price * item.itemCount).toFixed(2) || 0}
+                    </p>
                   </div>
                 </li>
               );
@@ -35,7 +59,7 @@ function Cart({ cart, handleCloseCart }) {
           </ul>
         )}
         {/* cart total will need to be calculated */}
-        <h2>Cart Total: ${getCartPrice()}</h2>
+        <h2>Cart Total: ${getWorkingCartPrice() || 0}</h2>
         <button onClick={handleCloseCart}>CloseCart</button>
       </div>
     </>

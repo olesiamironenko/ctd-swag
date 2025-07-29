@@ -72,7 +72,13 @@ function App() {
           handleAddItemToCart={handleAddItemToCart}
         />
         {/*`isCartOpen has to be true for the cart to be rendered*/}
-        {isCartOpen && <Cart cart={cart} handleCloseCart={handleCloseCart} />}
+        {isCartOpen && (
+          <Cart
+            cart={cart}
+            setCart={setCart} // only change
+            handleCloseCart={handleCloseCart}
+          />
+        )}
       </main>
       <footer>
         <p>
