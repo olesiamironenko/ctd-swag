@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import placeholder from './assets/placeholder.png';
+import CartItem from './CartItem';
 
 // `handleCloseCart` is not made yet but we know we will need it
 function Cart({ cart, handleCloseCart }) {
@@ -68,32 +69,14 @@ function Cart({ cart, handleCloseCart }) {
           <p>cart is empty</p>
         ) : (
           <ul className="cartList">
-            {workingCart.map((item) => {
-              return (
-                <li className="cartListItem" key={item.id}>
-                  <img src={placeholder} alt="" />
-                  <h2>{item.baseName}</h2>
-                  {item.variantName !== 'Default' ? (
-                    <p>{item.variantName}</p>
-                  ) : null}
-                  <div className="cartListItemSubtotal">
-                    <label>
-                      Count:
-                      <input
-                        type="number"
-                        value={item.itemCount}
-                        onChange={(event) =>
-                          handleUpdateField({ event, id: item.id })
-                        }
-                      />
-                    </label>
-                    <p>
-                      Subtotal: ${(item.price * item.itemCount).toFixed(2) || 0}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
+            {workingCart.map((item) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                handleUpdateField={handleUpdateField}
+                placeholder={placeholder}
+              />
+            ))}
           </ul>
         )}
         {isFormDirty && (
