@@ -1,7 +1,13 @@
-function CartItem({ item, handleUpdateField, placeholder }) {
+import ProductImage from './ProductImage';
+
+function CartItem({ item, handleUpdateField }) {
   return (
     <li className="cartListItem" key={item.id}>
-      <img src={placeholder} alt="" />
+      <ProductImage
+        src={item.image}
+        alt={item.baseName}
+        className="productImage"
+      />
       <h2>{item.baseName}</h2>
       {item.variantName !== 'Default' ? <p>{item.variantName}</p> : null}
       <div className="cartListItemSubtotal">

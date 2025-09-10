@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import placeholder from './assets/placeholder.png';
 import CartItem from './CartItem';
 
 // `handleCloseCart` is not made yet but we know we will need it
@@ -74,7 +73,6 @@ function Cart({ cart, handleCloseCart }) {
                 key={item.id}
                 item={item}
                 handleUpdateField={handleUpdateField}
-                placeholder={placeholder}
               />
             ))}
           </ul>

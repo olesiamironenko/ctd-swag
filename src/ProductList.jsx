@@ -21,6 +21,7 @@ function ProductList({ inventory = [], children, handleAddItemToCart }) {
           baseName: item.baseName,
           price: item.price,
           baseDescription: item.baseDescription,
+          image: item.image,
           variants: [{ ...item }],
         });
       } else {
@@ -36,7 +37,7 @@ function ProductList({ inventory = [], children, handleAddItemToCart }) {
   //destructuring assignment grabs `inventory` out of props
   //we're also setting a default value og `inventory` to an empty array
   return (
-    <ul>
+    <ul className="product-grid">
       {children}{' '}
       {/* this location guarantees that this list item will be first */}
       {products.map((product) => {

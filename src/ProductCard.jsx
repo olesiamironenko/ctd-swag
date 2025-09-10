@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ProductCardVariants from './ProductCardVariants';
+import ProductImage from './ProductImage';
 
 function ProductCard({ product, handleAddItemToCart }) {
   const [areVariantsShown, setAreVariantsShown] = useState(false);
@@ -7,7 +8,11 @@ function ProductCard({ product, handleAddItemToCart }) {
   return (
     <li className="productCard">
       <div className="productPreview">
-        <img src={`/product-images/${product.image}`} alt=" " />
+        <ProductImage
+          src={`/product-images/${product.image}`}
+          alt={product.baseName}
+          className="productImage"
+        />
       </div>
       <div className="productCopy">
         <h2>{product.baseName}</h2>

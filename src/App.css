@@ -207,14 +207,21 @@ main {
 }
 
 .productList {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* Adjust 200px to desired card width */
+  grid-auto-rows: auto; /* Height adapts to content */
   gap: 1rem;
   padding: 1rem 2rem;
   background-color: var(--medium-blue);
   border: 3px solid var(--dark-blue);
   border-radius: var(--medium-radius);
-  justify-content: center;
+}
+
+.productImage {
+  width: 100px;
 }
 
 .productVariantsWrapper {

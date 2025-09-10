@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import inventoryData from './assets/inventory.json';
 import Header from './Header.jsx';
-import ProductList from './ProductList';
+import ProductList from './ProductList.jsx';
 import Cart from './Cart';
 
 function App() {
@@ -70,6 +70,7 @@ function App() {
         <ProductList
           inventory={inventory}
           handleAddItemToCart={handleAddItemToCart}
+          className="productList"
         />
         {/*`isCartOpen has to be true for the cart to be rendered*/}
         {isCartOpen && (

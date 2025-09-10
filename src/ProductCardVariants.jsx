@@ -9,6 +9,7 @@ function ProductCardVariants({ variants, closeVariants, handleAddItemToCart }) {
                 <img
                   src={`/product-images/${variant.image}`}
                   alt={variant.variantDescription}
+                  className="productImage"
                 />
                 <p>${variant.price}</p>
               </div>
